@@ -4,7 +4,7 @@ using UnityEngine;
 
 enum Key
 {
-    None = 1, 
+    None = 1,
     Left = 2,
     Right = 4
 }

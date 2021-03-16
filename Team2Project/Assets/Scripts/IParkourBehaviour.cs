@@ -1,4 +1,4 @@
-﻿public interface IParkourBehaviour : ICharacterBehaviour
+﻿public interface IParkourBehaviour
 {
 
 }

@@ -1,4 +1,4 @@
-﻿public interface ITelekinesisBehaviour : ICharacterBehaviour
+﻿public interface ITelekinesisBehaviour
 {
 
 }
