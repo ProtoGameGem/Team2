@@ -9,25 +9,40 @@ enum Key
     Right = 4
 }
 
-public class Character : MonoBehaviour
+public class Character : MonoBehaviour, ICharacter
 {
-    ICharacterBehaviour characterBehaviour;
+    ActiveState activeState;
+    ActiveState ICharacter.ActiveState
+    {
+        get { return activeState; }
+        set { activeState = value; }
+    }
 
-    ActiveState CurrentActiveState = ActiveState.None;
-    ActionState CurrentActionState = ActionState.Idle;
+    ActionState actionState;
+    ActionState ICharacter.ActionState
+    {
+        get { return actionState; }
+        set { actionState = value; }
+    }
+
     Key PressedKey = Key.None;
     Key PrevPressedKey = Key.None;
 
-    [SerializeField] private float Multiplier = 1;
-    [SerializeField] private float Speed = 8;
-    [SerializeField] private float DashSpeed = 50;
+    [SerializeField] private float Multiplier = 10;
+    [SerializeField] private float Speed = 7;
+    [SerializeField] private float MomentumSpeed = 8;
+    [SerializeField] private float DashSpeed = 40;
+    [SerializeField] private float JumpForce = 25;
+    private float HorizontalFlyingSpeed = 0;
+    private float OriginalHorizontalFlyingSpeed = 0;
+    public bool Flying = false;
 
     private Rigidbody2D rigidbody2D;
 
-    int Clicked = 0;
-    float ClickTime = 0;
     float ClickDelay = 0.5f;
     float DashTime = 0;
+    float PrevClickTime = -1;
+    float CurClickTime = -1;
 
     float v = 0;
     float h = 0;
@@ -35,12 +50,24 @@ public class Character : MonoBehaviour
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        actionState = ActionState.Idle;
     }
 
     private void Update()
     {
         InputHandler();
-        Move();
+        if (activeState == ActiveState.Manual)
+        {
+            InputHandler();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (activeState == ActiveState.Manual)
+        {
+            Move();
+        }
     }
 
     private void InputHandler()
@@ -48,57 +75,101 @@ public class Character : MonoBehaviour
         v = Input.GetAxis("Vertical");
         h = Input.GetAxis("Horizontal");
 
-        if (CurrentActionState != ActionState.Dash)
+        // 좌우 키 눌렸을 때
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                CurrentActionState = ActionState.Move;
-                PrevPressedKey = PressedKey;
-                PressedKey = Key.Left;
-                Clicked++;
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                CurrentActionState = ActionState.Move;
-                PrevPressedKey = PressedKey;
-                PressedKey = Key.Right;
-                Clicked++;
-            }
+            SideKeyClicked(Key.Left);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            SideKeyClicked(Key.Right);
+        }
 
-            if (Clicked > 0)
-            {
-                ClickTime += Time.deltaTime;
-            }
-            if (Clicked > 1)
-            {
-                if (ClickTime <= ClickDelay && PrevPressedKey == PressedKey)
-                {
-                    CurrentActionState = ActionState.Dash;
-                    DashTime = 1;
-                }
-                ClickTime = 0;
-                Clicked = 0;
-            }
+        if (!Flying && Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            actionState = (actionState | ActionState.Jump);
         }
     }
 
+    private void SideKeyClicked(Key key)
+    {
+        actionState = (actionState | ActionState.Move);
+
+        if ((actionState & ActionState.Dash) == ActionState.Dash) return;
+
+        PrevPressedKey = PressedKey;
+        PressedKey = key;
+
+        PrevClickTime = CurClickTime;
+        CurClickTime = Time.time;
+
+        if (PrevClickTime != -1 && PrevPressedKey == PressedKey)
+        {
+            if (CurClickTime - PrevClickTime <= ClickDelay)
+                actionState = (actionState | ActionState.Dash);
+            DashTime = 1;
+        }
+    }
+
+
     private void Move()
-    {    
-        if (CurrentActionState == ActionState.Dash)
+    {
+        // 공중 이동
+        if (Flying)
+        {
+            rigidbody2D.velocity = new Vector2(HorizontalFlyingSpeed, rigidbody2D.velocity.y);
+            float speed = MomentumSpeed * h * Multiplier * Time.fixedDeltaTime;
+            float range = Mathf.Abs(OriginalHorizontalFlyingSpeed);
+            HorizontalFlyingSpeed = Mathf.Clamp(HorizontalFlyingSpeed + speed, -range, range);
+        }
+        // 땅에서 대쉬 이동
+        else if (ActionState.Dash == (actionState & ActionState.Dash))
         {
             float speed = DashSpeed * Multiplier * Time.fixedDeltaTime * DashTime;
             rigidbody2D.velocity = new Vector2(h * speed, rigidbody2D.velocity.y);
-            DashTime -= Time.deltaTime;
+            DashTime -= (Time.deltaTime * 2);
             if (DashTime < 0.1)
             {
                 DashTime = 0;
-                CurrentActionState -= ActionState.Dash;
+            }
+            PrevClickTime = CurClickTime = -1;
+            PrevPressedKey = PressedKey = Key.None;
+            actionState = (actionState & (~ActionState.Dash));
+            if (ActionState.Move == (actionState & ActionState.Move))
+            {
+                rigidbody2D.velocity = new Vector2(Speed * Multiplier * Time.fixedDeltaTime, rigidbody2D.velocity.y);
             }
         }
-        else
+        // 땅에서 좌우 이동
+        else if (ActionState.Move == (actionState & ActionState.Move))
         {
             float speed = Speed * Multiplier * Time.fixedDeltaTime;
             rigidbody2D.velocity = new Vector2(h * speed, rigidbody2D.velocity.y);
+        }
+        // 점프 시작 설정
+        if (ActionState.Jump == (actionState & ActionState.Jump))
+        {
+            actionState = (actionState & (~ActionState.Jump));
+            float jumpForce = JumpForce * Multiplier * Time.fixedDeltaTime;
+            HorizontalFlyingSpeed = rigidbody2D.velocity.x;
+            OriginalHorizontalFlyingSpeed = HorizontalFlyingSpeed;
+            Debug.Log(HorizontalFlyingSpeed);
+            rigidbody2D.velocity = new Vector2(HorizontalFlyingSpeed, jumpForce);
+            Flying = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Floor")
+        {
+            Flying = false;
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
+
+            if (activeState == ActiveState.None)
+            {
+                rigidbody2D.velocity = new Vector2(0, 0);
+            }
         }
     }
 }
