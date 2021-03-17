@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_MinSize: {x: 679, y: 492}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 122
+  controlID: 59
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 84
+  controlID: 88
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 58
+  controlID: 89
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -348,23 +348,23 @@ MonoBehaviour:
     m_DrawArea:
       serializedVersion: 2
       x: 0
-      y: 0
+      y: 21
       width: 1140
-      height: 622
-    m_Scale: {x: 0.57575756, y: 0.57575756}
-    m_Translation: {x: 570, y: 311}
+      height: 601
+    m_Scale: {x: 0.56698114, y: 0.56698114}
+    m_Translation: {x: 570, y: 300.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -990
-      y: -540.1579
-      width: 1980
-      height: 1080.3158
+      x: -1005.32446
+      y: -530
+      width: 2010.6489
+      height: 1060
     m_MinimalGUI: 1
-  m_defaultScale: 0.57575756
+  m_defaultScale: 0.56698114
   m_LastWindowPixelSize: {x: 1140, y: 622}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
@@ -401,7 +401,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 12fbffff
+      m_ExpandedIDs: 70f9ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -665,21 +665,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs
+    - Assets/Sprite/tileSet
     m_Globs: []
   m_ViewMode: 1
   m_StartGridSize: 67
   m_LastFolders:
-  - Assets/Prefabs
+  - Assets/Sprite/tileSet
   m_LastFoldersGridSize: 67
   m_LastProjectPath: C:\Users\Hyuki\OneDrive\Desktop\Unity\ProtoGameGemMarch\Team2\Team2Project
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 34370000
-    m_LastClickedID: 14132
-    m_ExpandedIDs: 000000002c37000000ca9a3b
+    m_SelectedIDs: d0370000
+    m_LastClickedID: 14288
+    m_ExpandedIDs: 00000000b0370000ba37000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -707,7 +707,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: c21afeff
     m_LastClickedID: -124222
-    m_ExpandedIDs: 000000002c370000
+    m_ExpandedIDs: 00000000b0370000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -734,7 +734,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c62300000058000088760000bac000006e3900005a3c0000fe3b0000223c0000b23203004c210100389c0100184b00002c4d00000c840000aa3d000050410000f23e000068390000ca4c00003e44000040440000ea4c0000c24c0000f249000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
