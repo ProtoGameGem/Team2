@@ -55,7 +55,6 @@ public class Character : MonoBehaviour, ICharacter
 
     private void Update()
     {
-        InputHandler();
         if (activeState == ActiveState.Manual)
         {
             InputHandler();
@@ -106,8 +105,11 @@ public class Character : MonoBehaviour, ICharacter
         if (PrevClickTime != -1 && PrevPressedKey == PressedKey)
         {
             if (CurClickTime - PrevClickTime <= ClickDelay)
+            {
                 actionState = (actionState | ActionState.Dash);
-            DashTime = 1;
+                DashTime = 1;
+                //Debug.Log("Dash");
+            }
         }
     }
 
@@ -131,13 +133,13 @@ public class Character : MonoBehaviour, ICharacter
             if (DashTime < 0.1)
             {
                 DashTime = 0;
-            }
-            PrevClickTime = CurClickTime = -1;
-            PrevPressedKey = PressedKey = Key.None;
-            actionState = (actionState & (~ActionState.Dash));
-            if (ActionState.Move == (actionState & ActionState.Move))
-            {
-                rigidbody2D.velocity = new Vector2(Speed * Multiplier * Time.fixedDeltaTime, rigidbody2D.velocity.y);
+                PrevClickTime = CurClickTime = -1;
+                PrevPressedKey = PressedKey = Key.None;
+                actionState = (actionState & (~ActionState.Dash));
+                if (ActionState.Move == (actionState & ActionState.Move))
+                {
+                    rigidbody2D.velocity = new Vector2(Speed * Multiplier * Time.fixedDeltaTime, rigidbody2D.velocity.y);
+                }
             }
         }
         // 땅에서 좌우 이동
