@@ -36,6 +36,8 @@ public class Character : MonoBehaviour, ICharacter
     private float HorizontalFlyingSpeed = 0;
     private float OriginalHorizontalFlyingSpeed = 0;
     public bool Flying = false;
+    public GameObject InteractDreamRoll = null;
+    bool Pushing = false;
 
     private Rigidbody2D rigidbody2D;
 
@@ -84,9 +86,28 @@ public class Character : MonoBehaviour, ICharacter
             SideKeyClicked(Key.Right);
         }
 
-        if (!Flying && Input.GetKeyDown(KeyCode.UpArrow))
+        if (!Flying && Input.GetKeyDown(KeyCode.UpArrow) && !Pushing)
         {
             actionState = (actionState | ActionState.Jump);
+        }
+
+        // 밀기
+        if (!Flying && InteractDreamRoll != null && Input.GetKeyDown(KeyCode.Q))
+        {
+            DreamRoll dreamRoll = InteractDreamRoll.GetComponent<DreamRoll>();
+            if (dreamRoll != null)
+            {
+                if (dreamRoll.Pushed)
+                {
+                    dreamRoll.DisablePushMode();
+                    Pushing = false;
+                }
+                else
+                {
+                    dreamRoll.EnablePushMode(gameObject);
+                    Pushing = true;
+                }
+            }
         }
     }
 
@@ -94,7 +115,7 @@ public class Character : MonoBehaviour, ICharacter
     {
         actionState = (actionState | ActionState.Move);
 
-        if ((actionState & ActionState.Dash) == ActionState.Dash) return;
+        if (((actionState & ActionState.Dash) == ActionState.Dash) || Pushing) return;
 
         PrevPressedKey = PressedKey;
         PressedKey = key;
@@ -122,6 +143,7 @@ public class Character : MonoBehaviour, ICharacter
             rigidbody2D.velocity = new Vector2(HorizontalFlyingSpeed, rigidbody2D.velocity.y);
             float speed = MomentumSpeed * h * Multiplier * Time.fixedDeltaTime;
             float range = Mathf.Abs(OriginalHorizontalFlyingSpeed);
+            range = range == 0 ? (Speed * Multiplier * Time.fixedDeltaTime) : range;
             HorizontalFlyingSpeed = Mathf.Clamp(HorizontalFlyingSpeed + speed, -range, range);
         }
         // 땅에서 대쉬 이동
@@ -163,7 +185,9 @@ public class Character : MonoBehaviour, ICharacter
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        string tag = collision.gameObject.tag;
+
+        if (tag == "Floor" || tag == "PushableObject")
         {
             Flying = false;
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
@@ -171,6 +195,36 @@ public class Character : MonoBehaviour, ICharacter
             if (activeState == ActiveState.None)
             {
                 rigidbody2D.velocity = new Vector2(0, 0);
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        string tag = collision.gameObject.tag;
+
+        if (tag == "Floor")
+        {
+            Flying = false;
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
+
+            if (activeState == ActiveState.None)
+            {
+                rigidbody2D.velocity = new Vector2(0, 0);
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        string tag = collision.gameObject.tag;
+        if (tag == "Floor")
+        {
+            Flying = true;
+            if (InteractDreamRoll != null)
+            {
+                InteractDreamRoll.GetComponent<DreamRoll>().DisablePushMode();
+                Pushing = false;
             }
         }
     }
