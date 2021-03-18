@@ -92,11 +92,6 @@ public class Character : MonoBehaviour, ICharacter
             {
                 TelekinesisOn = !TelekinesisOn;
                 Telekinesis.SetActive(TelekinesisOn);
-
-                if (Telekinesis)
-                {
-                    rigidbody2D.velocity = Vector2.zero;
-                }
             }
         }
     }
@@ -173,6 +168,11 @@ public class Character : MonoBehaviour, ICharacter
 
     private void Move()
     {
+        if (TelekinesisOn)
+        {
+            rigidbody2D.velocity = Vector2.zero;
+            return;
+        }
         // 땅에서 대쉬 이동
         if (ActionState.Dash == (actionState & ActionState.Dash))
         {
