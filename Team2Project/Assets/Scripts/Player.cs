@@ -5,9 +5,12 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private List<Character> Characters = new List<Character>();
-    Character Character;
-    int EnabledCharacterIdx = 0;
-    Vector3 CamOffset = new Vector3(0, 3, -12);
+    [SerializeField] private List<GameObject> VirtualCam = new List<GameObject>();
+    private bool AimFirstPlayer = true;
+    private Character Character;
+    private int EnabledCharacterIdx = 0;
+    private Vector3 CamOffset = new Vector3(0, 3, -12);
+
 
     private void Start()
     {
@@ -24,8 +27,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         SwitchCharacter();
-
-        Camera.main.transform.position = Character.transform.position + CamOffset;
     }
 
     private void SwitchCharacter()
@@ -42,6 +43,18 @@ public class Player : MonoBehaviour
             // 캐릭터 캐싱
             Character = Characters[EnabledCharacterIdx];
             Character.ConvertToManualState();
+
+            if (AimFirstPlayer)
+            {
+                VirtualCam[0].SetActive(false);
+                VirtualCam[1].SetActive(true);
+            }
+            else
+            {
+                VirtualCam[0].SetActive(true);
+                VirtualCam[1].SetActive(false);
+            }
+            AimFirstPlayer =! AimFirstPlayer;
         }
     }
 }

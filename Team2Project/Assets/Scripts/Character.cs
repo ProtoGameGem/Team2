@@ -33,10 +33,15 @@ public class Character : MonoBehaviour, ICharacter
     [SerializeField] private float MomentumSpeed = 8;
     [SerializeField] private float DashSpeed = 40;
     [SerializeField] private float JumpForce = 25;
+
+    private float DashDir = 0;
+    private float Dir = 0;
     private float HorizontalFlyingSpeed = 0;
     private float OriginalHorizontalFlyingSpeed = 0;
     public bool Flying = false;
     public GameObject InteractDreamRoll = null;
+    public bool HitLeftWall = false;
+    public bool HitRightWall = false;
     bool Pushing = false;
 
     private Rigidbody2D rigidbody2D;
@@ -49,6 +54,13 @@ public class Character : MonoBehaviour, ICharacter
     float v = 0;
     float h = 0;
 
+    [SerializeField] private GameObject Telekinesis;
+
+    public bool HasTelekinesisAbility = false;
+    public bool HasParkourAbility = false;
+
+    private bool TelekinesisOn = false;
+
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -59,7 +71,8 @@ public class Character : MonoBehaviour, ICharacter
     {
         if (activeState == ActiveState.Manual)
         {
-            InputHandler();
+            MoveInputHandler();
+            AbilityInputHandler();
         }
     }
 
@@ -71,10 +84,30 @@ public class Character : MonoBehaviour, ICharacter
         }
     }
 
-    private void InputHandler()
+    private void AbilityInputHandler()
     {
+        if(HasTelekinesisAbility && !Flying)
+        {
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                TelekinesisOn = !TelekinesisOn;
+                Telekinesis.SetActive(TelekinesisOn);
+
+                if (Telekinesis)
+                {
+                    rigidbody2D.velocity = Vector2.zero;
+                }
+            }
+        }
+    }
+
+    private void MoveInputHandler()
+    {
+        if (TelekinesisOn) return;
+
         v = Input.GetAxis("Vertical");
         h = Input.GetAxis("Horizontal");
+        Dir = h < 0 ? -1 : h > 0 ? 1 : 0;  
 
         // 좌우 키 눌렸을 때
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -111,11 +144,12 @@ public class Character : MonoBehaviour, ICharacter
         }
     }
 
+
     private void SideKeyClicked(Key key)
     {
-        actionState = (actionState | ActionState.Move);
-
         if (((actionState & ActionState.Dash) == ActionState.Dash) || Pushing) return;
+
+        actionState = (actionState | ActionState.Move);
 
         PrevPressedKey = PressedKey;
         PressedKey = key;
@@ -123,12 +157,14 @@ public class Character : MonoBehaviour, ICharacter
         PrevClickTime = CurClickTime;
         CurClickTime = Time.time;
 
+        // 대쉬
         if (PrevClickTime != -1 && PrevPressedKey == PressedKey)
         {
             if (CurClickTime - PrevClickTime <= ClickDelay)
             {
                 actionState = (actionState | ActionState.Dash);
                 DashTime = 1;
+                DashDir = h < 0 ? -1 : 1;
                 //Debug.Log("Dash");
             }
         }
@@ -137,32 +173,41 @@ public class Character : MonoBehaviour, ICharacter
 
     private void Move()
     {
+        // 땅에서 대쉬 이동
+        if (ActionState.Dash == (actionState & ActionState.Dash))
+        {
+            float speed = DashSpeed * Multiplier * Time.fixedDeltaTime * DashTime;
+            rigidbody2D.velocity = new Vector2(DashDir * speed, rigidbody2D.velocity.y);
+
+            if (!Flying)
+            {
+                DashTime -= (Time.deltaTime * 3);
+
+                if (DashTime < 0.1)
+                {
+                    DashDir = 0;
+                    DashTime = 0;
+                    PrevClickTime = CurClickTime = -1;
+                    PrevPressedKey = PressedKey = Key.None;
+                    actionState = (actionState & (~ActionState.Dash));
+                }
+            }
+            else
+            {
+                if (DashTime > 0.5)
+                {
+                    DashTime -= (Time.deltaTime * 3);
+                }
+            }
+        }
         // 공중 이동
-        if (Flying)
+        else if (Flying)
         {
             rigidbody2D.velocity = new Vector2(HorizontalFlyingSpeed, rigidbody2D.velocity.y);
             float speed = MomentumSpeed * h * Multiplier * Time.fixedDeltaTime;
             float range = Mathf.Abs(OriginalHorizontalFlyingSpeed);
             range = range == 0 ? (Speed * Multiplier * Time.fixedDeltaTime) : range;
             HorizontalFlyingSpeed = Mathf.Clamp(HorizontalFlyingSpeed + speed, -range, range);
-        }
-        // 땅에서 대쉬 이동
-        else if (ActionState.Dash == (actionState & ActionState.Dash))
-        {
-            float speed = DashSpeed * Multiplier * Time.fixedDeltaTime * DashTime;
-            rigidbody2D.velocity = new Vector2(h * speed, rigidbody2D.velocity.y);
-            DashTime -= (Time.deltaTime * 2);
-            if (DashTime < 0.1)
-            {
-                DashTime = 0;
-                PrevClickTime = CurClickTime = -1;
-                PrevPressedKey = PressedKey = Key.None;
-                actionState = (actionState & (~ActionState.Dash));
-                if (ActionState.Move == (actionState & ActionState.Move))
-                {
-                    rigidbody2D.velocity = new Vector2(Speed * Multiplier * Time.fixedDeltaTime, rigidbody2D.velocity.y);
-                }
-            }
         }
         // 땅에서 좌우 이동
         else if (ActionState.Move == (actionState & ActionState.Move))
