@@ -14,6 +14,7 @@ public class DreamRoll : MonoBehaviour
     {
         PushCharacter = character;
         Gap = PushCharacter.transform.position.x - transform.position.x;
+        PushCharacter.GetComponent<Character>().Pushing = true;
         GetComponent<Rigidbody2D>().constraints = ~RigidbodyConstraints2D.FreezeAll | RigidbodyConstraints2D.FreezeRotation;
         Pushed = true;
     }
@@ -23,6 +24,7 @@ public class DreamRoll : MonoBehaviour
         if (PushCharacter != null)
         {
             PushCharacter.GetComponent<Character>().InteractDreamRoll = null;
+            PushCharacter.GetComponent<Character>().Pushing = false;
             PushCharacter = null;
         }
         Pushed = false;

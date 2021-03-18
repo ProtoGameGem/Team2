@@ -42,7 +42,7 @@ public class Character : MonoBehaviour, ICharacter
     public GameObject InteractDreamRoll = null;
     public bool HitLeftWall = false;
     public bool HitRightWall = false;
-    bool Pushing = false;
+    public bool Pushing = false;
 
     private Rigidbody2D rigidbody2D;
 
@@ -128,12 +128,10 @@ public class Character : MonoBehaviour, ICharacter
                 if (dreamRoll.Pushed)
                 {
                     dreamRoll.DisablePushMode();
-                    Pushing = false;
                 }
                 else
                 {
                     dreamRoll.EnablePushMode(gameObject);
-                    Pushing = true;
                 }
             }
         }
@@ -269,7 +267,6 @@ public class Character : MonoBehaviour, ICharacter
             if (InteractDreamRoll != null)
             {
                 InteractDreamRoll.GetComponent<DreamRoll>().DisablePushMode();
-                Pushing = false;
             }
         }
     }
