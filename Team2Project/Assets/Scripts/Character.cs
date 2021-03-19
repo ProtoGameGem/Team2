@@ -35,7 +35,7 @@ public class Character : MonoBehaviour, ICharacter
     [SerializeField] private float JumpForce = 25;
 
     private float DashDir = 0;
-    private float Dir = 0;
+    public float Dir = 0;
     private float HorizontalFlyingSpeed = 0;
     private float OriginalHorizontalFlyingSpeed = 0;
     public bool Flying = false;
@@ -50,6 +50,8 @@ public class Character : MonoBehaviour, ICharacter
     float DashTime = 0;
     float PrevClickTime = -1;
     float CurClickTime = -1;
+    float BounceTime = 0;
+    bool FlyingBounce = false;
 
     float v = 0;
     float h = 0;
@@ -61,9 +63,12 @@ public class Character : MonoBehaviour, ICharacter
 
     private bool TelekinesisOn = false;
 
+    Animator Anim;
+
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        Anim = GetComponent<Animator>();
         actionState = ActionState.Idle;
     }
 
@@ -102,7 +107,7 @@ public class Character : MonoBehaviour, ICharacter
 
         v = Input.GetAxis("Vertical");
         h = Input.GetAxis("Horizontal");
-        Dir = h < 0 ? -1 : h > 0 ? 1 : 0;  
+        Dir = h < 0 ? -1 : h > 0 ? 1 : Dir;
 
         // 좌우 키 눌렸을 때
         if (Input.GetKeyDown(KeyCode.LeftArrow))
@@ -135,6 +140,18 @@ public class Character : MonoBehaviour, ICharacter
                 }
             }
         }
+        if (!Pushing)
+        {
+            Vector3 scale = transform.localScale;
+            if (Dir > 0)
+            {
+                transform.localScale = new Vector3(-Mathf.Abs(scale.x), scale.y, scale.z);
+            }
+            else if (Dir < 0)
+            {
+                transform.localScale = new Vector3(Mathf.Abs(scale.x), scale.y, scale.z);
+            }
+        }
     }
 
 
@@ -158,6 +175,7 @@ public class Character : MonoBehaviour, ICharacter
                 actionState = (actionState | ActionState.Dash);
                 DashTime = 1;
                 DashDir = h < 0 ? -1 : 1;
+                Anim.SetBool("Dashing", true);
                 //Debug.Log("Dash");
             }
         }
@@ -166,52 +184,61 @@ public class Character : MonoBehaviour, ICharacter
 
     private void Move()
     {
+        if (FlyingBounce) h = 0;
         if (TelekinesisOn)
         {
             rigidbody2D.velocity = Vector2.zero;
             return;
         }
-        // 땅에서 대쉬 이동
-        if (ActionState.Dash == (actionState & ActionState.Dash))
+        if (Boucning())
         {
-            float speed = DashSpeed * Multiplier * Time.fixedDeltaTime * DashTime;
-            rigidbody2D.velocity = new Vector2(DashDir * speed, rigidbody2D.velocity.y);
-
-            if (!Flying)
+            return;
+        }
+        if (!StartBounce())
+        {
+            // 땅에서 대쉬 이동
+            if (ActionState.Dash == (actionState & ActionState.Dash))
             {
-                DashTime -= (Time.deltaTime * 3);
+                float speed = DashSpeed * Multiplier * Time.fixedDeltaTime * DashTime;
+                rigidbody2D.velocity = new Vector2(DashDir * speed, rigidbody2D.velocity.y);
 
-                if (DashTime < 0.1)
-                {
-                    DashDir = 0;
-                    DashTime = 0;
-                    PrevClickTime = CurClickTime = -1;
-                    PrevPressedKey = PressedKey = Key.None;
-                    actionState = (actionState & (~ActionState.Dash));
-                }
-            }
-            else
-            {
-                if (DashTime > 0.5)
+                if (!Flying)
                 {
                     DashTime -= (Time.deltaTime * 3);
+
+                    if (DashTime < 0.1)
+                    {
+                        DashDir = 0;
+                        DashTime = 0;
+                        PrevClickTime = CurClickTime = -1;
+                        PrevPressedKey = PressedKey = Key.None;
+                        actionState = (actionState & (~ActionState.Dash));
+                        Anim.SetBool("Dashing", false);
+                    }
+                }
+                else
+                {
+                    if (DashTime > 0.5)
+                    {
+                        DashTime -= (Time.deltaTime * 3);
+                    }
                 }
             }
-        }
-        // 공중 이동
-        else if (Flying)
-        {
-            rigidbody2D.velocity = new Vector2(HorizontalFlyingSpeed, rigidbody2D.velocity.y);
-            float speed = MomentumSpeed * h * Multiplier * Time.fixedDeltaTime;
-            float range = Mathf.Abs(OriginalHorizontalFlyingSpeed);
-            range = range == 0 ? (Speed * Multiplier * Time.fixedDeltaTime) : range;
-            HorizontalFlyingSpeed = Mathf.Clamp(HorizontalFlyingSpeed + speed, -range, range);
-        }
-        // 땅에서 좌우 이동
-        else if (ActionState.Move == (actionState & ActionState.Move))
-        {
-            float speed = Speed * Multiplier * Time.fixedDeltaTime;
-            rigidbody2D.velocity = new Vector2(h * speed, rigidbody2D.velocity.y);
+            // 공중 이동
+            else if (Flying)
+            {
+                rigidbody2D.velocity = new Vector2(HorizontalFlyingSpeed, rigidbody2D.velocity.y);
+                float speed = MomentumSpeed * h * Multiplier * Time.fixedDeltaTime;
+                float range = Mathf.Abs(OriginalHorizontalFlyingSpeed);
+                range = range == 0 ? (Speed * Multiplier * Time.fixedDeltaTime) : range;
+                HorizontalFlyingSpeed = Mathf.Clamp(HorizontalFlyingSpeed + speed, -range, range);
+            }
+            // 땅에서 좌우 이동
+            else if (ActionState.Move == (actionState & ActionState.Move))
+            {
+                float speed = Speed * Multiplier * Time.fixedDeltaTime;
+                rigidbody2D.velocity = new Vector2(h * speed, rigidbody2D.velocity.y);
+            }
         }
         // 점프 시작 설정
         if (ActionState.Jump == (actionState & ActionState.Jump))
@@ -226,12 +253,51 @@ public class Character : MonoBehaviour, ICharacter
         }
     }
 
+    private bool StartBounce()
+    {
+        if ((HitRightWall && h > 0.5) || (HitLeftWall && h < -0.5))
+        {
+            FlyingBounce = true;
+            rigidbody2D.AddForce(new Vector2(0, 175 * Time.deltaTime), ForceMode2D.Impulse);
+            BounceTime = 1f;
+            return true;
+        }
+        return false;
+    }
+
+    private bool Boucning()
+    {
+        if (BounceTime > 0)
+        {
+            if (FlyingBounce && BounceTime < 0.5f)
+            {
+                return true;
+            }
+            BounceTime -= Time.deltaTime * 2f;
+
+            if (BounceTime < 0)
+            {
+                BounceTime = 0;
+                rigidbody2D.velocity = new Vector2(0, rigidbody2D.velocity.y);
+                return false;
+            }
+            else
+            {
+                float power = 100 * -Dir;
+                rigidbody2D.velocity = new Vector2(BounceTime * power * Time.fixedDeltaTime, rigidbody2D.velocity.y);
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tag = collision.gameObject.tag;
 
         if (tag == "Floor" || tag == "PushableObject")
         {
+            FlyingBounce = false;
             Flying = false;
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
 
@@ -248,6 +314,7 @@ public class Character : MonoBehaviour, ICharacter
 
         if (tag == "Floor")
         {
+            FlyingBounce = false;
             Flying = false;
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
 

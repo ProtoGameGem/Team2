@@ -19,14 +19,15 @@ public class SideColiider : MonoBehaviour
 
         if (tag == "Wall" || tag == "Floor")
         {
-            float h = Input.GetAxis("Horizontal");
-            if (h > 0)
+            if (character.Dir > 0)
             {
                 character.HitRightWall = true;
+                character.HitLeftWall = false;
             }
-            else if (h < 0)
+            else if (character.Dir < 0)
             {
                 character.HitLeftWall = true;
+                character.HitRightWall = false;
             }
 
         }
