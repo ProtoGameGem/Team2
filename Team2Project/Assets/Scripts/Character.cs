@@ -97,6 +97,7 @@ public class Character : MonoBehaviour, ICharacter
             {
                 TelekinesisOn = !TelekinesisOn;
                 Telekinesis.SetActive(TelekinesisOn);
+                Anim.SetBool("Walking", false);
             }
         }
     }
@@ -196,6 +197,8 @@ public class Character : MonoBehaviour, ICharacter
         }
         if (!StartBounce())
         {
+            Anim.SetBool("Walking", false);
+
             // 땅에서 대쉬 이동
             if (ActionState.Dash == (actionState & ActionState.Dash))
             {
@@ -238,6 +241,7 @@ public class Character : MonoBehaviour, ICharacter
             {
                 float speed = Speed * Multiplier * Time.fixedDeltaTime;
                 rigidbody2D.velocity = new Vector2(h * speed, rigidbody2D.velocity.y);
+                Anim.SetBool("Walking", true);
             }
         }
         // 점프 시작 설정
