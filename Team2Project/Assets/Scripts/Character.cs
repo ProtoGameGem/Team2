@@ -142,15 +142,15 @@ public class Character : MonoBehaviour, ICharacter
                 ParkourTime = 0f;
                 ParkourOn = false;
                 rigidbody2D.gravityScale = 1f;
-
                 ParkourJumpingTime = 2f;
             }
-            if (ParkourTime <= 0f)
+            else if (ParkourTime <= 0f)
             {
                 ParkourTime = 0f;
                 ParkourOn = false;
                 rigidbody2D.gravityScale = 1f;
                 ShouldFallPakour = true;
+                StopPakourJump();
             }
         }
     }
