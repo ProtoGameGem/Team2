@@ -49,6 +49,7 @@ public class SideColiider : MonoBehaviour
 
         if (tag == "Wall" || tag == "Floor")
         {
+            character.InteractDreamRoll = null;
             character.HitRightWall = false;
             character.HitLeftWall = false;
         }
