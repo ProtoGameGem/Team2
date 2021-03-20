@@ -98,8 +98,16 @@ public class Character : MonoBehaviour, ICharacter
                 TelekinesisOn = !TelekinesisOn;
                 Telekinesis.SetActive(TelekinesisOn);
                 Anim.SetBool("Walking", false);
+                Anim.SetBool("Dashing", false);
+                DashTime = 0f;
             }
         }
+    }
+
+    public void SetOffAnim()
+    {
+        Anim.SetBool("Walking", false);
+        Anim.SetBool("Dashing", false);
     }
 
     public void AbilityOff(bool toogle)
@@ -108,8 +116,9 @@ public class Character : MonoBehaviour, ICharacter
         {
             TelekinesisOn = toogle;
             Telekinesis.SetActive(TelekinesisOn);
-            Anim.SetBool("Walking", TelekinesisOn);
         }
+        Anim.SetBool("Walking", false);
+        Anim.SetBool("Dashing", false);
     }
 
     private void MoveInputHandler()

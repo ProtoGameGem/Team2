@@ -5,7 +5,6 @@ using UnityEngine;
 public class Telekinesis : MonoBehaviour
 {
     [SerializeField] List<GameObject> ObjectsInField = new List<GameObject>();
-    [SerializeField] float speed = 5f;
     GameObject SelectedObj = null;
     Vector3 size;
     Vector3 pos;
@@ -20,7 +19,7 @@ public class Telekinesis : MonoBehaviour
         ObjectsInField.Clear();
         if (SelectedObj != null)
         {
-            SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 1;
+            TooglePhysicsSetting(false);
             Physics2D.IgnoreLayerCollision(SelectedObj.layer, LayerMask.NameToLayer("Player"), false);
             ToggleAnim(false);
             SelectedObj = null;
@@ -42,6 +41,27 @@ public class Telekinesis : MonoBehaviour
         SelectObject();
     }
 
+    private void TooglePhysicsSetting(bool toogle)
+    {
+        if (SelectedObj != null)
+        {
+            // 염력으로 움질일 때
+            if (toogle)
+            {
+                SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 0;
+                SelectedObj.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None | RigidbodyConstraints2D.FreezeRotation;
+            }
+            else
+            {
+                SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 1;
+                if (SelectedObj.gameObject.tag == "NonePushableObject")
+                    SelectedObj.GetComponent<Rigidbody2D>().mass = 1000f;
+                SelectedObj.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+                SelectedObj.GetComponent<Rigidbody2D>().velocity = new Vector3(0, 0, 0);
+            }
+        }
+    }
+
     private void SelectObject()
     {
         if (Input.GetMouseButtonDown(0))
@@ -59,12 +79,15 @@ public class Telekinesis : MonoBehaviour
                         Debug.Log(hit.collider.gameObject.name);
                         if (SelectedObj != null)
                         {
-                            SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 1;
+                            TooglePhysicsSetting(false);
                             Physics2D.IgnoreLayerCollision(SelectedObj.layer, LayerMask.NameToLayer("Player"), false);
                             ToggleAnim(false);
                         }
+                        // 처음 물건이 선택되는 시점
                         SelectedObj = hit.collider.gameObject;
+                        TooglePhysicsSetting(true);
                         Physics2D.IgnoreLayerCollision(SelectedObj.layer, LayerMask.NameToLayer("Player"), true);
+                        SelectedObj.transform.rotation = Quaternion.Euler(0, 0, 0);
                         ToggleAnim(true);
                     }
                 }
@@ -99,21 +122,23 @@ public class Telekinesis : MonoBehaviour
             if(h != 0 || v != 0)
             {
                 moving = true;
-                SelectedObj.transform.Translate(new Vector3(h * speed * Time.fixedDeltaTime, v * speed * Time.fixedDeltaTime, 0));
+                Vector2 movement = new Vector2(h, v).normalized;
+                float speed = 200f;
+                SelectedObj.GetComponent<Rigidbody2D>().velocity = new Vector2(movement.x * speed * Time.fixedDeltaTime, movement.y * speed * Time.fixedDeltaTime);
             }
 
             if (moving)
             {
                 if (SelectedObj.GetComponent<Rigidbody2D>() != null)
                 {
-                    SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 0;
+                    TooglePhysicsSetting(true);
                 }
             }
             else
             {
                 if (SelectedObj.GetComponent<Rigidbody2D>() != null)
                 {
-                    SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 1;
+                    TooglePhysicsSetting(false);
                 }
             }
         }
@@ -154,8 +179,8 @@ public class Telekinesis : MonoBehaviour
                 {
                     if (SelectedObj.GetComponent<Rigidbody2D>() != null)
                     {
-                        SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 1;
                         Physics2D.IgnoreLayerCollision(SelectedObj.layer, LayerMask.NameToLayer("Player"), false);
+                        TooglePhysicsSetting(false);
                         ToggleAnim(false);
                     }
                     SelectedObj = null;
