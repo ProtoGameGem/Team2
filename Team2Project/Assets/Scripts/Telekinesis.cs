@@ -13,16 +13,30 @@ public class Telekinesis : MonoBehaviour
     private void Start()
     {
         size = new Vector3(transform.localScale.x * 1.4f, transform.localScale.y * 1.225f, transform.localScale.z);
-        pos = transform.parent.position + new Vector3(0.2f, 0, 0);
     }
 
     private void OnDisable()
     {
         ObjectsInField.Clear();
+        if (SelectedObj != null)
+        {
+            SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 1;
+            Physics2D.IgnoreLayerCollision(SelectedObj.layer, LayerMask.NameToLayer("Player"), false);
+            SelectedObj = null;
+        }
     }
 
     private void Update()
     {
+        if (transform.parent.localScale.x >= 1)
+        {
+            pos = transform.parent.position + new Vector3(0.2f, 0, 0);
+        }
+        else if (transform.parent.localScale.x <= -1)
+        {
+            pos = transform.parent.position + new Vector3(-0.2f, 0, 0);
+        }
+
         DetectObjects();
         SelectObject();
     }
@@ -42,7 +56,13 @@ public class Telekinesis : MonoBehaviour
                     if (ObjectsInField[i] == hit.collider.gameObject)
                     {
                         Debug.Log(hit.collider.gameObject.name);
+                        if (SelectedObj != null)
+                        {
+                            SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 1;
+                            Physics2D.IgnoreLayerCollision(SelectedObj.layer, LayerMask.NameToLayer("Player"), false);
+                        }
                         SelectedObj = hit.collider.gameObject;
+                        Physics2D.IgnoreLayerCollision(SelectedObj.layer, LayerMask.NameToLayer("Player"), true);
                     }
                 }
             }   
@@ -121,6 +141,7 @@ public class Telekinesis : MonoBehaviour
                     if (SelectedObj.GetComponent<Rigidbody2D>() != null)
                     {
                         SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 1;
+                        Physics2D.IgnoreLayerCollision(SelectedObj.layer, LayerMask.NameToLayer("Player"), false);
                     }
                     SelectedObj = null;
                 }
@@ -129,4 +150,9 @@ public class Telekinesis : MonoBehaviour
         }
     }
 
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(pos, size);
+    }
 }
