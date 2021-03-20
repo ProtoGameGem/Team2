@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637518638985520093
-    m_Hash: 3341145901
+      ticks: 637518674138473620
+    m_Hash: 584810394
   m_LockFileStatus:
     m_FilePath: C:/Users/Hyuki/OneDrive/Desktop/Unity/ProtoGameGemMarch/Team2/Team2Project/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637518638985689640
-    m_Hash: 2384795736
+      ticks: 637518674138483602
+    m_Hash: 510989131
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_PackageAssets:
@@ -2995,17 +2995,35 @@ m_PackageAssets:
         - 7.2.1
         - 7.3.1
         - 7.4.1
+        - 7.4.2
+        - 7.4.3
+        - 7.5.1
+        - 7.5.2
+        - 7.5.3
         - 8.0.1
         - 8.1.0
         - 8.2.0
+        - 8.3.1
         - 9.0.0-preview.13
         - 9.0.0-preview.35
         - 9.0.0-preview.38
+        - 9.0.0-preview.60
+        - 9.0.0-preview.77
+        - 10.0.0-preview.30
+        - 10.1.0
+        - 10.2.0
+        - 10.2.1
+        - 10.2.2
+        - 10.3.1
+        - 10.3.2
+        - 10.4.0
         compatible:
         - 8.2.0
         - 9.0.0-preview.13
         - 9.0.0-preview.35
         - 9.0.0-preview.38
+        - 9.0.0-preview.60
+        - 9.0.0-preview.77
         verified: 8.2.0
       dependencies:
       - name: com.unity.ugui
@@ -3223,6 +3241,9 @@ m_PackageAssets:
         - 4.2.0
         - 4.3.0
         - 4.3.1
+        - 4.3.2
+        - 4.6.0-preview
+        - 4.7.0-preview
         compatible:
         - 4.0.0-preview
         - 4.0.0
@@ -3235,6 +3256,9 @@ m_PackageAssets:
         - 4.2.0
         - 4.3.0
         - 4.3.1
+        - 4.3.2
+        - 4.6.0-preview
+        - 4.7.0-preview
         verified: 4.0.9
       dependencies: []
       resolvedDependencies: []
