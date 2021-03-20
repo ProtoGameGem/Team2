@@ -1,28 +1,25 @@
 fileFormatVersion: 2
-guid: ac3200b2a54f18b40a5bdf3c0172b7c6
+guid: c2c4e205c90414a40895bb272ff40fe4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7882499267302685536
-    second: ch1_pakur_standing_0
+      213: 4215734221789148466
+    second: ch2_pakur_standing_0
   - first:
-      213: -8436671287141465211
-    second: ch1_pakur_standing_1
+      213: 499248867683557140
+    second: ch2_pakur_standing_1
   - first:
-      213: 632180928066830166
-    second: ch1_pakur_standing_2
+      213: -3852206180168704179
+    second: ch2_pakur_standing_2
   - first:
-      213: -5123191965078882512
-    second: ch1_pakur_standing_3
+      213: 1947366456828692944
+    second: ch2_pakur_standing_3
   - first:
-      213: 2971417713240403950
-    second: ch1_pakur_standing_4
+      213: -7329827050309337602
+    second: ch2_pakur_standing_4
   - first:
-      213: -1163103422773105167
-    second: ch1_pakur_standing_5
-  - first:
-      213: -3077355535361873866
-    second: ch1_pakur_standing_6
+      213: -9525850697938509
+    second: ch2_pakur_standing_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -110,12 +107,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ch1_pakur_standing_0
+      name: ch2_pakur_standing_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 3
-        width: 39
+        x: 6
+        y: 2
+        width: 32
         height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -124,19 +121,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a4852efdacbb9290800000000000000
-      internalID: -7882499267302685536
+      spriteID: 235333550fb418a30800000000000000
+      internalID: 4215734221789148466
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ch1_pakur_standing_1
+      name: ch2_pakur_standing_1
       rect:
         serializedVersion: 2
-        x: 49
-        y: 3
-        width: 37
+        x: 46
+        y: 2
+        width: 32
         height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -145,19 +142,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 583023be92ceaea80800000000000000
-      internalID: -8436671287141465211
+      spriteID: 41f5bc43330bde600800000000000000
+      internalID: 499248867683557140
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ch1_pakur_standing_2
+      name: ch2_pakur_standing_2
       rect:
         serializedVersion: 2
-        x: 90
-        y: 3
-        width: 37
+        x: 82
+        y: 2
+        width: 32
         height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -166,19 +163,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 65f33336435f5c800800000000000000
-      internalID: 632180928066830166
+      spriteID: d4fda7593e63a8ac0800000000000000
+      internalID: -3852206180168704179
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ch1_pakur_standing_3
+      name: ch2_pakur_standing_3
       rect:
         serializedVersion: 2
-        x: 131
-        y: 3
-        width: 36
+        x: 120
+        y: 2
+        width: 32
         height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -187,19 +184,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03776553d04c6e8b0800000000000000
-      internalID: -5123191965078882512
+      spriteID: 0d909c2997f660b10800000000000000
+      internalID: 1947366456828692944
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ch1_pakur_standing_4
+      name: ch2_pakur_standing_4
       rect:
         serializedVersion: 2
-        x: 170
-        y: 3
-        width: 35
+        x: 161
+        y: 2
+        width: 32
         height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -208,39 +205,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eef6ffcbaa89c3920800000000000000
-      internalID: 2971417713240403950
+      spriteID: efd33410229374a90800000000000000
+      internalID: -7329827050309337602
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ch1_pakur_standing_5
+      name: ch2_pakur_standing_5
       rect:
         serializedVersion: 2
-        x: 210
-        y: 3
-        width: 33
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1fd61907993dbdfe0800000000000000
-      internalID: -1163103422773105167
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ch1_pakur_standing_6
-      rect:
-        serializedVersion: 2
-        x: 251
-        y: 3
+        x: 202
+        y: 4
         width: 29
         height: 79
       alignment: 0
@@ -250,8 +226,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6386c23f1790b45d0800000000000000
-      internalID: -3077355535361873866
+      spriteID: 3b947fc0a482edff0800000000000000
+      internalID: -9525850697938509
       vertices: []
       indices: 
       edges: []
@@ -259,7 +235,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 7c5da2e1b8774cd42a6e03a3bfa8b86c
+    spriteID: 180fc0f46d6d9d94888b806e8659c06d
     internalID: 0
     vertices: []
     indices: 

@@ -1,28 +1,31 @@
 fileFormatVersion: 2
-guid: ac3200b2a54f18b40a5bdf3c0172b7c6
+guid: 936b9fc9f2f54544c924ff70627ccb51
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7882499267302685536
-    second: ch1_pakur_standing_0
+      213: 7047686299368436173
+    second: ch1_pakur_jump_0
   - first:
-      213: -8436671287141465211
-    second: ch1_pakur_standing_1
+      213: -745788602566531587
+    second: ch1_pakur_jump_1
   - first:
-      213: 632180928066830166
-    second: ch1_pakur_standing_2
+      213: -3763772055716273962
+    second: ch1_pakur_jump_2
   - first:
-      213: -5123191965078882512
-    second: ch1_pakur_standing_3
+      213: 1124722933892932172
+    second: ch1_pakur_jump_3
   - first:
-      213: 2971417713240403950
-    second: ch1_pakur_standing_4
+      213: 2834605760314237479
+    second: ch1_pakur_jump_4
   - first:
-      213: -1163103422773105167
-    second: ch1_pakur_standing_5
+      213: -2202983831409338096
+    second: ch1_pakur_jump_5
   - first:
-      213: -3077355535361873866
-    second: ch1_pakur_standing_6
+      213: -955386170485291835
+    second: ch1_pakur_jump_6
+  - first:
+      213: 9154343978805777048
+    second: ch1_pakur_jump_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -110,136 +113,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ch1_pakur_standing_0
+      name: ch1_pakur_jump_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 3
-        width: 39
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0a4852efdacbb9290800000000000000
-      internalID: -7882499267302685536
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ch1_pakur_standing_1
-      rect:
-        serializedVersion: 2
-        x: 49
-        y: 3
-        width: 37
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 583023be92ceaea80800000000000000
-      internalID: -8436671287141465211
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ch1_pakur_standing_2
-      rect:
-        serializedVersion: 2
-        x: 90
-        y: 3
-        width: 37
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 65f33336435f5c800800000000000000
-      internalID: 632180928066830166
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ch1_pakur_standing_3
-      rect:
-        serializedVersion: 2
-        x: 131
-        y: 3
-        width: 36
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 03776553d04c6e8b0800000000000000
-      internalID: -5123191965078882512
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ch1_pakur_standing_4
-      rect:
-        serializedVersion: 2
-        x: 170
-        y: 3
-        width: 35
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eef6ffcbaa89c3920800000000000000
-      internalID: 2971417713240403950
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ch1_pakur_standing_5
-      rect:
-        serializedVersion: 2
-        x: 210
-        y: 3
-        width: 33
-        height: 80
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1fd61907993dbdfe0800000000000000
-      internalID: -1163103422773105167
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ch1_pakur_standing_6
-      rect:
-        serializedVersion: 2
-        x: 251
+        x: 6
         y: 3
         width: 29
         height: 79
@@ -250,8 +127,155 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6386c23f1790b45d0800000000000000
-      internalID: -3077355535361873866
+      spriteID: dc13e3a59596ec160800000000000000
+      internalID: 7047686299368436173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ch1_pakur_jump_1
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 3
+        width: 31
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df5ac72a73d66a5f0800000000000000
+      internalID: -745788602566531587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ch1_pakur_jump_2
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 3
+        width: 36
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d06d73b14564cbc0800000000000000
+      internalID: -3763772055716273962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ch1_pakur_jump_3
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 1
+        width: 38
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c426c61ac81db9f00800000000000000
+      internalID: 1124722933892932172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ch1_pakur_jump_4
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 1
+        width: 42
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7226ecdabea865720800000000000000
+      internalID: 2834605760314237479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ch1_pakur_jump_5
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 2
+        width: 47
+        height: 82
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 019dae290ed6d61e0800000000000000
+      internalID: -2202983831409338096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ch1_pakur_jump_6
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 5
+        width: 52
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c447ecf659cdb2f0800000000000000
+      internalID: -955386170485291835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ch1_pakur_jump_7
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 5
+        width: 51
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8925470d853ca0f70800000000000000
+      internalID: 9154343978805777048
       vertices: []
       indices: 
       edges: []
@@ -259,7 +283,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 7c5da2e1b8774cd42a6e03a3bfa8b86c
+    spriteID: 0b8947af73a16304f8ee443237c4192f
     internalID: 0
     vertices: []
     indices: 
