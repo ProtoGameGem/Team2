@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6817538268711283613}
   - component: {fileID: 6817538268711283611}
   - component: {fileID: 6817538268711283608}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DreamRoll
   m_TagString: PushableObject
   m_Icon: {fileID: 0}

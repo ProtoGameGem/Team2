@@ -5,28 +5,57 @@ using UnityEngine;
 public class Telekinesis : MonoBehaviour
 {
     [SerializeField] List<GameObject> ObjectsInField = new List<GameObject>();
+    Vector3 size;
+    Vector3 pos;
 
-    private void OnTriggerStay2D(Collider2D collision)
+    private void Start()
     {
-        if (collision != null)
+        size = new Vector3(transform.localScale.x * 1.4f, transform.localScale.y * 1.225f, transform.localScale.z);
+        pos = transform.parent.position + new Vector3(0.2f, 0, 0);
+    }
+
+    private void OnDisable()
+    {
+        ObjectsInField.Clear();
+    }
+
+    private void Update()
+    {
+        Collider2D[] hits = Physics2D.OverlapBoxAll(pos, size, 0);
+        int i = 0;
+        while (i < hits.Length)
         {
-            Debug.Log(collision.gameObject.name);
-            if (collision.gameObject.layer == 10)
+            Collider2D hit = hits[i];
+            Debug.Log(hit.gameObject.layer);
+            if (hit.gameObject.layer == 10)
             {
-                Debug.Log(collision.gameObject); 
-                if (!ObjectsInField.Contains(collision.gameObject))
+                if (!ObjectsInField.Contains(hit.gameObject))
                 {
-                    ObjectsInField.Add(collision.gameObject);
+                    ObjectsInField.Add(hit.gameObject);
                 }
             }
+            i++;
         }
+
+
+        for (int j = 0; j < ObjectsInField.Count; j++)
+        {
+            bool has = false;
+            foreach (var hit in hits)
+            {
+                if (hit.gameObject == ObjectsInField[j])
+                {
+                    has = true;
+                    break;
+                }
+            }
+
+            if (!has)
+            {
+                ObjectsInField.RemoveAt(j);
+            }
+        }
+
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision != null)
-        {
-            ObjectsInField.Remove(collision.gameObject);
-        }
-    }
 }

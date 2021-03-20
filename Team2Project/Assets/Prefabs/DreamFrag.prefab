@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5263640615899455202}
   - component: {fileID: 8907585453502411891}
   - component: {fileID: 2520949575235181243}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DreamFrag
   m_TagString: NonePushableObject
   m_Icon: {fileID: 0}
