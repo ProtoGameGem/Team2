@@ -12,7 +12,7 @@ public class Telekinesis : MonoBehaviour
 
     private void Start()
     {
-        size = new Vector3(transform.localScale.x * 1.4f, transform.localScale.y * 1.225f, transform.localScale.z);
+        size = new Vector3(transform.localScale.x * 1.45f, transform.localScale.y * 1.225f, transform.localScale.z);
     }
 
     private void OnDisable()
@@ -22,6 +22,7 @@ public class Telekinesis : MonoBehaviour
         {
             SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 1;
             Physics2D.IgnoreLayerCollision(SelectedObj.layer, LayerMask.NameToLayer("Player"), false);
+            ToggleAnim(false);
             SelectedObj = null;
         }
     }
@@ -30,7 +31,7 @@ public class Telekinesis : MonoBehaviour
     {
         if (transform.parent.localScale.x >= 1)
         {
-            pos = transform.parent.position + new Vector3(0.2f, 0, 0);
+            pos = transform.parent.position + new Vector3(0.4f, 0, 0);
         }
         else if (transform.parent.localScale.x <= -1)
         {
@@ -60,12 +61,25 @@ public class Telekinesis : MonoBehaviour
                         {
                             SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 1;
                             Physics2D.IgnoreLayerCollision(SelectedObj.layer, LayerMask.NameToLayer("Player"), false);
+                            ToggleAnim(false);
                         }
                         SelectedObj = hit.collider.gameObject;
                         Physics2D.IgnoreLayerCollision(SelectedObj.layer, LayerMask.NameToLayer("Player"), true);
+                        ToggleAnim(true);
                     }
                 }
             }   
+        }
+    }
+
+    private void ToggleAnim(bool toogle)
+    {
+        if (SelectedObj != null)
+        {
+            if (SelectedObj.name.Contains("Dream"))
+            {
+                SelectedObj.GetComponent<Animator>().SetBool("Telekinesis", toogle);
+            }
         }
     }
 
@@ -142,6 +156,7 @@ public class Telekinesis : MonoBehaviour
                     {
                         SelectedObj.GetComponent<Rigidbody2D>().gravityScale = 1;
                         Physics2D.IgnoreLayerCollision(SelectedObj.layer, LayerMask.NameToLayer("Player"), false);
+                        ToggleAnim(false);
                     }
                     SelectedObj = null;
                 }
