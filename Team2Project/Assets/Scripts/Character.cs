@@ -58,10 +58,17 @@ public class Character : MonoBehaviour, ICharacter
 
     [SerializeField] private GameObject Telekinesis;
 
+    // 염력
     public bool HasTelekinesisAbility = false;
-    public bool HasParkourAbility = false;
-
     private bool TelekinesisOn = false;
+
+    // 파쿠르
+    public bool HasParkourAbility = false;
+    private bool ShouldFallPakour = false;
+    private bool ParkourOn = false;
+    private float ParkourTime = 0f;
+    private float ParkourJumpingTime = 0f;
+    private bool EnoughFlyToParkour = false;
 
     Animator Anim;
 
@@ -76,8 +83,10 @@ public class Character : MonoBehaviour, ICharacter
     {
         if (activeState == ActiveState.Manual)
         {
+            //Debug.Log(rigidbody2D.velocity);
             MoveInputHandler();
             AbilityInputHandler();
+            VerticalHitCheck();
         }
     }
 
@@ -91,7 +100,7 @@ public class Character : MonoBehaviour, ICharacter
 
     private void AbilityInputHandler()
     {
-        if(HasTelekinesisAbility && !Flying)
+        if (HasTelekinesisAbility && !Flying)
         {
             if (Input.GetKeyDown(KeyCode.W))
             {
@@ -100,6 +109,48 @@ public class Character : MonoBehaviour, ICharacter
                 Anim.SetBool("Walking", false);
                 Anim.SetBool("Dashing", false);
                 DashTime = 0f;
+            }
+        }
+        if (HasParkourAbility && EnoughFlyToParkour)
+        {
+            if (!ShouldFallPakour)
+            {
+                if ((HitLeftWall && Dir == -1) || (HitRightWall && Dir == 1))
+                {
+                    if (!ParkourOn)
+                    {
+                        StopDash();
+                        ParkourTime = 1f;
+                        rigidbody2D.gravityScale = 0f;
+                        h = v = 0;
+                        Dir = Dir == 1 ? -1 : 1;
+                        Flip();
+                    }
+                    ParkourOn = true;
+                }
+            }
+        }
+
+        if (ParkourTime > 0f)
+        {
+            ParkourTime -= Time.deltaTime;
+            ParkourJumpingTime = 0f;
+            rigidbody2D.velocity = Vector2.zero;
+
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                ParkourTime = 0f;
+                ParkourOn = false;
+                rigidbody2D.gravityScale = 1f;
+
+                ParkourJumpingTime = 2f;
+            }
+            if (ParkourTime <= 0f)
+            {
+                ParkourTime = 0f;
+                ParkourOn = false;
+                rigidbody2D.gravityScale = 1f;
+                ShouldFallPakour = true;
             }
         }
     }
@@ -124,6 +175,7 @@ public class Character : MonoBehaviour, ICharacter
     private void MoveInputHandler()
     {
         if (TelekinesisOn) return;
+        if (ParkourOn || ParkourJumpingTime > 0) return;
 
         v = Input.GetAxis("Vertical");
         h = Input.GetAxis("Horizontal");
@@ -162,18 +214,22 @@ public class Character : MonoBehaviour, ICharacter
         }
         if (!Pushing)
         {
-            Vector3 scale = transform.localScale;
-            if (Dir > 0)
-            {
-                transform.localScale = new Vector3(-Mathf.Abs(scale.x), scale.y, scale.z);
-            }
-            else if (Dir < 0)
-            {
-                transform.localScale = new Vector3(Mathf.Abs(scale.x), scale.y, scale.z);
-            }
+            Flip();
         }
     }
 
+    private void Flip()
+    {
+        Vector3 scale = transform.localScale;
+        if (Dir > 0)
+        {
+            transform.localScale = new Vector3(-Mathf.Abs(scale.x), scale.y, scale.z);
+        }
+        else if (Dir < 0)
+        {
+            transform.localScale = new Vector3(Mathf.Abs(scale.x), scale.y, scale.z);
+        }
+    }
 
     private void SideKeyClicked(Key key)
     {
@@ -196,28 +252,117 @@ public class Character : MonoBehaviour, ICharacter
                 DashTime = 1;
                 DashDir = h < 0 ? -1 : 1;
                 Anim.SetBool("Dashing", true);
-                //Debug.Log("Dash");
             }
         }
     }
 
+    private void FloorRayCast(Vector2 pos)
+    {
+        int floorMask = (1 << LayerMask.NameToLayer("Floor")) + (1 << LayerMask.NameToLayer("Obj"));
+        if (Physics2D.Raycast(pos, Vector2.down, 1f, floorMask))
+        {
+            FlyingBounce = false;
+            Flying = false;
+            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
+            ShouldFallPakour = false;
+
+            if (activeState == ActiveState.None)
+            {
+                rigidbody2D.velocity = new Vector2(0, 0);
+            }
+        }
+        else
+        {
+            Flying = true;
+            if (InteractDreamRoll != null)
+            {
+                InteractDreamRoll.GetComponent<DreamRoll>().DisablePushMode();
+            }
+        }
+        Debug.DrawRay(pos, Vector2.down * 1f, Color.cyan);
+    }
+
+    private void VerticalHitCheck()
+    {
+        float gap = 0.175f;
+        Vector2 pos = new Vector2(transform.position.x - gap, transform.position.y);
+        for (int i = 0; i < 3; i++)
+        {
+            FloorRayCast(pos + new Vector2(gap * i, 0));
+        }
+
+        // 파쿠르 하기에 충분한 높이인지 체크
+        int pakourFloorMask = 1 << LayerMask.NameToLayer("Floor");
+        if (Physics2D.Raycast(transform.position, Vector2.down, 1.3f, pakourFloorMask))
+        {
+            EnoughFlyToParkour = false;
+        }
+        else
+        {
+            EnoughFlyToParkour = true;
+        }
+        Debug.DrawRay(transform.position, Vector2.down * 1.3f, Color.red);
+
+        //머리위에 뭔가 충돌하면
+        if (Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1), Vector2.up, 0.1f))
+        {
+            StopPakourJump();
+        }
+        Debug.DrawRay(new Vector2(transform.position.x, transform.position.y + 1), Vector2.up * 0.1f, Color.blue);
+    }
+
+    private void StopPakourJump()
+    {
+        Debug.Log("Hit head");
+        ParkourTime = 0f;
+        ParkourJumpingTime = 0f;
+        ParkourOn = false;
+        rigidbody2D.gravityScale = 1f;
+        ShouldFallPakour = true;
+
+        HorizontalFlyingSpeed = rigidbody2D.velocity.x;
+        OriginalHorizontalFlyingSpeed = HorizontalFlyingSpeed;
+    }
+
+    private void StopDash()
+    {
+        DashDir = 0;
+        DashTime = 0;
+        PrevClickTime = CurClickTime = -1;
+        PrevPressedKey = PressedKey = Key.None;
+        actionState = (actionState & (~ActionState.Dash));
+        Anim.SetBool("Dashing", false);
+    }
 
     private void Move()
     {
         Anim.SetBool("Walking", false);
         if (FlyingBounce) h = 0;
-        if (TelekinesisOn)
+        if (TelekinesisOn || ParkourOn)
         {
             rigidbody2D.velocity = Vector2.zero;
             return;
         }
+        if (ParkourJumpingTime > 0)
+        {
+            ParkourJumpingTime -= Time.deltaTime * 3f;
+            float speed = 35f * ParkourJumpingTime * Time.fixedDeltaTime;
+            rigidbody2D.velocity = new Vector2(Dir * speed * 5f, speed * 7.5f);
+            ShouldFallPakour = false;
+
+            if (ParkourJumpingTime <= 0)
+            {
+                StopPakourJump();
+            }
+            return;
+        }
+
         if (Boucning())
         {
             return;
         }
         if (!StartBounce())
         {
-            // 땅에서 대쉬 이동
             if (ActionState.Dash == (actionState & ActionState.Dash))
             {
                 float speed = DashSpeed * Multiplier * Time.fixedDeltaTime * DashTime;
@@ -229,12 +374,7 @@ public class Character : MonoBehaviour, ICharacter
 
                     if (DashTime < 0.1)
                     {
-                        DashDir = 0;
-                        DashTime = 0;
-                        PrevClickTime = CurClickTime = -1;
-                        PrevPressedKey = PressedKey = Key.None;
-                        actionState = (actionState & (~ActionState.Dash));
-                        Anim.SetBool("Dashing", false);
+                        StopDash();
                     }
                 }
                 else
@@ -272,7 +412,6 @@ public class Character : MonoBehaviour, ICharacter
             float jumpForce = JumpForce * Multiplier * Time.fixedDeltaTime;
             HorizontalFlyingSpeed = rigidbody2D.velocity.x;
             OriginalHorizontalFlyingSpeed = HorizontalFlyingSpeed;
-            Debug.Log(HorizontalFlyingSpeed);
             rigidbody2D.velocity = new Vector2(HorizontalFlyingSpeed, jumpForce);
             Flying = true;
         }
@@ -280,8 +419,10 @@ public class Character : MonoBehaviour, ICharacter
 
     private bool StartBounce()
     {
+        if (HasParkourAbility) return false;
         if ((HitRightWall && h > 0.5) || (HitLeftWall && h < -0.5))
         {
+            StopDash();
             FlyingBounce = true;
             rigidbody2D.AddForce(new Vector2(0, 175 * Time.deltaTime), ForceMode2D.Impulse);
             BounceTime = 1f;
@@ -316,50 +457,52 @@ public class Character : MonoBehaviour, ICharacter
         return false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        string tag = collision.gameObject.tag;
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    string tag = collision.gameObject.tag;
 
-        if (tag == "Floor" || tag == "PushableObject" || tag == "NonePushableObject")
-        {
-            FlyingBounce = false;
-            Flying = false;
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
+    //    if (tag == "Floor" || tag == "PushableObject" || tag == "NonePushableObject")
+    //    {
+    //        FlyingBounce = false;
+    //        Flying = false;
+    //        rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
 
-            if (activeState == ActiveState.None)
-            {
-                rigidbody2D.velocity = new Vector2(0, 0);
-            }
-        }
-    }
+    //        if (activeState == ActiveState.None)
+    //        {
+    //            rigidbody2D.velocity = new Vector2(0, 0);
+    //        }
+    //    }
+    //}
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        string tag = collision.gameObject.tag;
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    string tag = collision.gameObject.tag;
 
-        if (tag == "Floor")
-        {
-            FlyingBounce = false;
-            Flying = false;
-            rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
+    //    if (tag == "Floor")
+    //    {
+    //        ShouldFallPakour = false;
 
-            if (activeState == ActiveState.None)
-            {
-                rigidbody2D.velocity = new Vector2(0, 0);
-            }
-        }
-    }
+    //        FlyingBounce = false;
+    //        Flying = false;
+    //        rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        string tag = collision.gameObject.tag;
-        if (tag == "Floor")
-        {
-            Flying = true;
-            if (InteractDreamRoll != null)
-            {
-                InteractDreamRoll.GetComponent<DreamRoll>().DisablePushMode();
-            }
-        }
-    }
+    //        if (activeState == ActiveState.None)
+    //        {
+    //            rigidbody2D.velocity = new Vector2(0, 0);
+    //        }
+    //    }
+    //}
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    string tag = collision.gameObject.tag;
+    //    if (tag == "Floor")
+    //    {
+    //        Flying = true;
+    //        if (InteractDreamRoll != null)
+    //        {
+    //            InteractDreamRoll.GetComponent<DreamRoll>().DisablePushMode();
+    //        }
+    //    }
+    //}
 }
