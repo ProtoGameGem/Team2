@@ -256,7 +256,7 @@ public class Character : MonoBehaviour, ICharacter
         }
     }
 
-    private void FloorRayCast(Vector2 pos)
+    private bool FloorRayCast(Vector2 pos)
     {
         int floorMask = (1 << LayerMask.NameToLayer("Floor")) + (1 << LayerMask.NameToLayer("Obj"));
         if (Physics2D.Raycast(pos, Vector2.down, 1f, floorMask))
@@ -270,25 +270,33 @@ public class Character : MonoBehaviour, ICharacter
             {
                 rigidbody2D.velocity = new Vector2(0, 0);
             }
+            return true;
         }
-        else
+        return false;
+    }
+
+    private void VerticalHitCheck()
+    {
+        float gap = 0.2f;
+        Vector2 pos = new Vector2(transform.position.x - gap, transform.position.y);
+        bool Grounded = false;
+        for (int i = 0; i < 3; i++)
+        {
+            if (FloorRayCast(pos + new Vector2(gap * i, 0)))
+            {
+                Grounded = true;
+                break;
+            }
+            Debug.DrawRay(pos + new Vector2(gap * i, 0), Vector2.down * 1f, Color.cyan);
+        }
+
+        if (!Grounded)
         {
             Flying = true;
             if (InteractDreamRoll != null)
             {
                 InteractDreamRoll.GetComponent<DreamRoll>().DisablePushMode();
             }
-        }
-        Debug.DrawRay(pos, Vector2.down * 1f, Color.cyan);
-    }
-
-    private void VerticalHitCheck()
-    {
-        float gap = 0.175f;
-        Vector2 pos = new Vector2(transform.position.x - gap, transform.position.y);
-        for (int i = 0; i < 3; i++)
-        {
-            FloorRayCast(pos + new Vector2(gap * i, 0));
         }
 
         // 파쿠르 하기에 충분한 높이인지 체크
