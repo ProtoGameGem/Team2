@@ -86,8 +86,8 @@ public class Character : MonoBehaviour, ICharacter
             //Debug.Log(rigidbody2D.velocity);
             MoveInputHandler();
             AbilityInputHandler();
-            VerticalHitCheck();
         }
+        VerticalHitCheck();
     }
 
     private void FixedUpdate()
