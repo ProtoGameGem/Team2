@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - PushableObject
   - NonePushableObject
+  - Taro
   layers:
   - Default
   - TransparentFX

@@ -293,7 +293,7 @@ public class Character : MonoBehaviour, ICharacter
 
         // 파쿠르 하기에 충분한 높이인지 체크
         int pakourFloorMask = 1 << LayerMask.NameToLayer("Floor");
-        if (Physics2D.Raycast(transform.position, Vector2.down, 1.3f, pakourFloorMask))
+        if (Physics2D.Raycast(transform.position, Vector2.down, 2f, pakourFloorMask))
         {
             EnoughFlyToParkour = false;
         }
@@ -301,7 +301,7 @@ public class Character : MonoBehaviour, ICharacter
         {
             EnoughFlyToParkour = true;
         }
-        Debug.DrawRay(transform.position, Vector2.down * 1.3f, Color.red);
+        Debug.DrawRay(transform.position, Vector2.down * 2f, Color.red);
 
         //머리위에 뭔가 충돌하면
         if (Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y + 1), Vector2.up, 0.1f))

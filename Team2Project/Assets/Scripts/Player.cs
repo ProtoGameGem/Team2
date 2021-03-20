@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -10,8 +11,24 @@ public class Player : MonoBehaviour
     private bool AimFirstPlayer = true;
     private Character Character;
     private int EnabledCharacterIdx = 0;
-    private Vector3 CamOffset = new Vector3(0, 3, -12);
+    private int CollectedTaroNumber = 0;
 
+    public Text TaroNumText;
+
+    public static Player instance { get; private set; }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        instance = null;
+    }
 
     private void Start()
     {
@@ -28,6 +45,15 @@ public class Player : MonoBehaviour
     private void Update()
     {
         SwitchCharacter();
+    }
+
+    public void CollectTaro()
+    {
+        CollectedTaroNumber++;
+        if (TaroNumText != null)
+        {
+            TaroNumText.text = (": " + CollectedTaroNumber.ToString());
+        }
     }
 
     private void SwitchCharacter()
