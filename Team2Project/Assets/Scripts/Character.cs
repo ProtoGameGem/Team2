@@ -102,6 +102,16 @@ public class Character : MonoBehaviour, ICharacter
         }
     }
 
+    public void AbilityOff(bool toogle)
+    {
+        if (HasTelekinesisAbility && !Flying)
+        {
+            TelekinesisOn = toogle;
+            Telekinesis.SetActive(TelekinesisOn);
+            Anim.SetBool("Walking", TelekinesisOn);
+        }
+    }
+
     private void MoveInputHandler()
     {
         if (TelekinesisOn) return;
@@ -185,6 +195,7 @@ public class Character : MonoBehaviour, ICharacter
 
     private void Move()
     {
+        Anim.SetBool("Walking", false);
         if (FlyingBounce) h = 0;
         if (TelekinesisOn)
         {
@@ -197,8 +208,6 @@ public class Character : MonoBehaviour, ICharacter
         }
         if (!StartBounce())
         {
-            Anim.SetBool("Walking", false);
-
             // 땅에서 대쉬 이동
             if (ActionState.Dash == (actionState & ActionState.Dash))
             {
@@ -241,7 +250,10 @@ public class Character : MonoBehaviour, ICharacter
             {
                 float speed = Speed * Multiplier * Time.fixedDeltaTime;
                 rigidbody2D.velocity = new Vector2(h * speed, rigidbody2D.velocity.y);
-                Anim.SetBool("Walking", true);
+                if (h != 0)
+                {
+                    Anim.SetBool("Walking", true);
+                }
             }
         }
         // 점프 시작 설정
@@ -299,7 +311,7 @@ public class Character : MonoBehaviour, ICharacter
     {
         string tag = collision.gameObject.tag;
 
-        if (tag == "Floor" || tag == "PushableObject")
+        if (tag == "Floor" || tag == "PushableObject" || tag == "NonePushableObject")
         {
             FlyingBounce = false;
             Flying = false;

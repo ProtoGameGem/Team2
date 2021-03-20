@@ -38,6 +38,7 @@ public class Player : MonoBehaviour
             if (!OldCharacter.Flying)
             {
                 OldCharacter.GetComponent<Rigidbody2D>().velocity = new Vector2(0, OldCharacter.GetComponent<Rigidbody2D>().velocity.y);
+                OldCharacter.AbilityOff(false);
             }
             EnabledCharacterIdx = (EnabledCharacterIdx + 1) % Characters.Count;
             // 캐릭터 캐싱
