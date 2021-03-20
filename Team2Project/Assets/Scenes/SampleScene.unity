@@ -1401,10 +1401,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DreamFrag
       objectReference: {fileID: 0}
-    - target: {fileID: 5006255760194477621, guid: 4eb0d300de11b6a4e85996a965bffd15, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4eb0d300de11b6a4e85996a965bffd15, type: 3}
 --- !u!1001 &6817538268778533367
