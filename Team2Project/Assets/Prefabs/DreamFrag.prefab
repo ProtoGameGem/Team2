@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5263640615899455202}
   - component: {fileID: 8907585453502411891}
   - component: {fileID: 2520949575235181243}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: DreamFrag
   m_TagString: NonePushableObject
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 5006255760194477621}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -4.4607315, y: 4.463, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 3.75674, y: 3.7043762, z: 2.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0

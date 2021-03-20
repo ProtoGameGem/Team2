@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 67599248}
   m_Layer: 9
   m_Name: Character2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -210,7 +210,7 @@ Transform:
   m_GameObject: {fileID: 193295838536527769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.4808056, y: 3.9, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2.8572872, y: 2.3661876, z: 1.5}
   m_Children:
   - {fileID: 1457856443}
   - {fileID: 1473136648}
@@ -281,9 +281,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Multiplier: 10
-  Speed: 7
-  MomentumSpeed: 1
-  DashSpeed: 40
+  Speed: 12
+  MomentumSpeed: 2
+  DashSpeed: 50
   JumpForce: 25
   Flying: 0
   InteractDreamRoll: {fileID: 0}
