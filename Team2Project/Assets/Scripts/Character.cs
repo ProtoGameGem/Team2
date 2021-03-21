@@ -70,6 +70,14 @@ public class Character : MonoBehaviour, ICharacter
     private float ParkourJumpingTime = 0f;
     private bool EnoughFlyToParkour = false;
 
+    //공유몽
+    public bool SharingOn = false;
+
+    private enum Ability {
+        None, Telekinesis, Parkour
+    }
+    private Ability OriginalAbility = Ability.None;
+
     Animator Anim;
 
     private void Start()
@@ -77,6 +85,9 @@ public class Character : MonoBehaviour, ICharacter
         rigidbody2D = GetComponent<Rigidbody2D>();
         Anim = GetComponent<Animator>();
         actionState = ActionState.Idle;
+
+        OriginalAbility = HasParkourAbility ? Ability.Parkour : OriginalAbility;
+        OriginalAbility = HasTelekinesisAbility ? Ability.Telekinesis : OriginalAbility;
     }
 
     private void Update()
@@ -160,6 +171,7 @@ public class Character : MonoBehaviour, ICharacter
     {
         Anim.SetBool("Walking", false);
         Anim.SetBool("Dashing", false);
+        Anim.SetBool("Kinesis", false);
     }
 
     public void AbilityOff(bool toogle)
@@ -171,6 +183,7 @@ public class Character : MonoBehaviour, ICharacter
         }
         Anim.SetBool("Walking", false);
         Anim.SetBool("Dashing", false);
+        Anim.SetBool("Kinesis", false);
     }
 
     private void MoveInputHandler()
@@ -301,7 +314,7 @@ public class Character : MonoBehaviour, ICharacter
         }
 
         // 파쿠르 하기에 충분한 높이인지 체크
-        int pakourFloorMask = 1 << LayerMask.NameToLayer("Floor") + (1 << LayerMask.NameToLayer("Edge"));
+        int pakourFloorMask = (1 << LayerMask.NameToLayer("Floor")) + (1 << LayerMask.NameToLayer("Edge"));
         if (Physics2D.Raycast(transform.position, Vector2.down, 2f, pakourFloorMask))
         {
             EnoughFlyToParkour = false;
@@ -466,52 +479,36 @@ public class Character : MonoBehaviour, ICharacter
         return false;
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    string tag = collision.gameObject.tag;
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        string tag = collision.gameObject.tag;
 
-    //    if (tag == "Floor" || tag == "PushableObject" || tag == "NonePushableObject")
-    //    {
-    //        FlyingBounce = false;
-    //        Flying = false;
-    //        rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
+        if (tag == "Sharing")
+        {
+            SharingOn = true;
+        }
+    }
 
-    //        if (activeState == ActiveState.None)
-    //        {
-    //            rigidbody2D.velocity = new Vector2(0, 0);
-    //        }
-    //    }
-    //}
 
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    string tag = collision.gameObject.tag;
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        string tag = collision.gameObject.tag;
 
-    //    if (tag == "Floor")
-    //    {
-    //        ShouldFallPakour = false;
+        if (tag == "Sharing")
+        {
+            SharingOn = false;
+        }
+    }
 
-    //        FlyingBounce = false;
-    //        Flying = false;
-    //        rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
-
-    //        if (activeState == ActiveState.None)
-    //        {
-    //            rigidbody2D.velocity = new Vector2(0, 0);
-    //        }
-    //    }
-    //}
-
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    string tag = collision.gameObject.tag;
-    //    if (tag == "Floor")
-    //    {
-    //        Flying = true;
-    //        if (InteractDreamRoll != null)
-    //        {
-    //            InteractDreamRoll.GetComponent<DreamRoll>().DisablePushMode();
-    //        }
-    //    }
-    //}
+    public void ToogleSharedAbility(bool toogle)
+    {
+        if (OriginalAbility == Ability.Parkour)
+        {
+            HasTelekinesisAbility = toogle;
+        }
+        else if (OriginalAbility == Ability.Telekinesis)
+        {
+            HasParkourAbility = toogle;
+        }
+    }
 }

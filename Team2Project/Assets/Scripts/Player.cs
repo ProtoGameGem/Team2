@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         SwitchCharacter();
+        SharingAbilityHandler();
     }
 
     public void CollectTaro()
@@ -83,6 +84,20 @@ public class Player : MonoBehaviour
                 VirtualCam[1].SetActive(false);
             }
             AimFirstPlayer =! AimFirstPlayer;
+        }
+    }
+
+    public void SharingAbilityHandler()
+    {
+        Character CurCharacter = Characters[EnabledCharacterIdx];
+        Character NextCharacter = Characters[((EnabledCharacterIdx + 1) % Characters.Count)];
+        if (CurCharacter.SharingOn)
+        {
+            NextCharacter.ToogleSharedAbility(true);
+        }
+        else
+        {
+            NextCharacter.ToogleSharedAbility(false);
         }
     }
 

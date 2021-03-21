@@ -10,6 +10,7 @@ TagManager:
   - NonePushableObject
   - Taro
   - Edge
+  - Sharing
   layers:
   - Default
   - TransparentFX
