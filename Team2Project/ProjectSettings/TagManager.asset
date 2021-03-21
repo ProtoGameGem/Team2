@@ -9,6 +9,7 @@ TagManager:
   - PushableObject
   - NonePushableObject
   - Taro
+  - Edge
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Player
   - Obj
   - Floor
-  - 
+  - Edge
   - 
   - 
   - 

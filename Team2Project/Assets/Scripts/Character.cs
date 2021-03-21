@@ -259,7 +259,7 @@ public class Character : MonoBehaviour, ICharacter
 
     private bool FloorRayCast(Vector2 pos)
     {
-        int floorMask = (1 << LayerMask.NameToLayer("Floor")) + (1 << LayerMask.NameToLayer("Obj"));
+        int floorMask = (1 << LayerMask.NameToLayer("Floor")) + (1 << LayerMask.NameToLayer("Obj")) + (1 << LayerMask.NameToLayer("Edge"));
         if (Physics2D.Raycast(pos, Vector2.down, 1f, floorMask))
         {
             FlyingBounce = false;
@@ -301,7 +301,7 @@ public class Character : MonoBehaviour, ICharacter
         }
 
         // 파쿠르 하기에 충분한 높이인지 체크
-        int pakourFloorMask = 1 << LayerMask.NameToLayer("Floor");
+        int pakourFloorMask = 1 << LayerMask.NameToLayer("Floor") + (1 << LayerMask.NameToLayer("Edge"));
         if (Physics2D.Raycast(transform.position, Vector2.down, 2f, pakourFloorMask))
         {
             EnoughFlyToParkour = false;
