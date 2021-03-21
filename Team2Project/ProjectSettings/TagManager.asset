@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Floor
+  - Wall
+  - PushableObject
+  - NonePushableObject
+  - Taro
+  - Edge
+  - Sharing
   layers:
   - Default
   - TransparentFX
@@ -13,11 +20,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Telekinesis
+  - Player
+  - Obj
+  - Floor
+  - Edge
   - 
   - 
   - 

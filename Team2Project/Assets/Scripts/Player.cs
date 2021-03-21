@@ -1,13 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     [SerializeField] private List<Character> Characters = new List<Character>();
-    Character Character;
-    int EnabledCharacterIdx = 0;
-    Vector3 CamOffset = new Vector3(0, 3, -12);
+    [SerializeField] private List<GameObject> VirtualCam = new List<GameObject>();
+    private bool AimFirstPlayer = true;
+    private Character Character;
+    private int EnabledCharacterIdx = 0;
+    private int CollectedTaroNumber = 0;
+
+    public Text TaroNumText;
+
+    public static Player instance { get; private set; }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        instance = null;
+    }
 
     private void Start()
     {
@@ -24,8 +45,16 @@ public class Player : MonoBehaviour
     private void Update()
     {
         SwitchCharacter();
+        SharingAbilityHandler();
+    }
 
-        Camera.main.transform.position = Character.transform.position + CamOffset;
+    public void CollectTaro()
+    {
+        CollectedTaroNumber++;
+        if (TaroNumText != null)
+        {
+            TaroNumText.text = (": " + CollectedTaroNumber.ToString());
+        }
     }
 
     private void SwitchCharacter()
@@ -37,11 +66,46 @@ public class Player : MonoBehaviour
             if (!OldCharacter.Flying)
             {
                 OldCharacter.GetComponent<Rigidbody2D>().velocity = new Vector2(0, OldCharacter.GetComponent<Rigidbody2D>().velocity.y);
+                OldCharacter.AbilityOff(false);
             }
             EnabledCharacterIdx = (EnabledCharacterIdx + 1) % Characters.Count;
             // 캐릭터 캐싱
             Character = Characters[EnabledCharacterIdx];
             Character.ConvertToManualState();
+
+            if (AimFirstPlayer)
+            {
+                VirtualCam[0].SetActive(false);
+                VirtualCam[1].SetActive(true);
+            }
+            else
+            {
+                VirtualCam[0].SetActive(true);
+                VirtualCam[1].SetActive(false);
+            }
+            AimFirstPlayer =! AimFirstPlayer;
         }
+    }
+
+    public void SharingAbilityHandler()
+    {
+        Character CurCharacter = Characters[EnabledCharacterIdx];
+        Character NextCharacter = Characters[((EnabledCharacterIdx + 1) % Characters.Count)];
+        if (CurCharacter.SharingOn)
+        {
+            NextCharacter.ToogleSharedAbility(true);
+            NextCharacter.Icon.SetActive(true);
+        }
+        else
+        {
+            NextCharacter.ToogleSharedAbility(false);
+            NextCharacter.Icon.SetActive(false);
+        }
+    }
+
+    public void RestartGame()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.name);
     }
 }
