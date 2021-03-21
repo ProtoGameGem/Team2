@@ -33,6 +33,7 @@ public class Character : MonoBehaviour, ICharacter
     [SerializeField] private float MomentumSpeed = 8;
     [SerializeField] private float DashSpeed = 40;
     [SerializeField] private float JumpForce = 25;
+    public GameObject Icon;
 
     private float DashDir = 0;
     public float Dir = 0;
@@ -335,7 +336,6 @@ public class Character : MonoBehaviour, ICharacter
 
     private void StopPakourJump()
     {
-        Debug.Log("Hit head");
         ParkourTime = 0f;
         ParkourJumpingTime = 0f;
         ParkourOn = false;

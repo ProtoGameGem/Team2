@@ -94,10 +94,12 @@ public class Player : MonoBehaviour
         if (CurCharacter.SharingOn)
         {
             NextCharacter.ToogleSharedAbility(true);
+            NextCharacter.Icon.SetActive(true);
         }
         else
         {
             NextCharacter.ToogleSharedAbility(false);
+            NextCharacter.Icon.SetActive(false);
         }
     }
 

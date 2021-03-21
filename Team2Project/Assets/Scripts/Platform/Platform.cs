@@ -30,15 +30,18 @@ public class Platform : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "PushableObject" || collision.gameObject.tag == "NonePushableObject")
+        if (ForRide)
         {
-            collision.transform.parent = Passangers[collision.gameObject.name];
-
-            if (Passangers.ContainsKey(collision.gameObject.name))
+            if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "PushableObject" || collision.gameObject.tag == "NonePushableObject")
             {
-                Passangers.Remove(collision.gameObject.name);
+                collision.transform.parent = Passangers[collision.gameObject.name];
+
+                if (Passangers.ContainsKey(collision.gameObject.name))
+                {
+                    Passangers.Remove(collision.gameObject.name);
+                }
+                SetOnce = false;
             }
-            SetOnce = false;
         }
     }
 }
