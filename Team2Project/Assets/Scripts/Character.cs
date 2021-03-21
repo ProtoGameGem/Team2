@@ -108,6 +108,7 @@ public class Character : MonoBehaviour, ICharacter
                 Telekinesis.SetActive(TelekinesisOn);
                 Anim.SetBool("Walking", false);
                 Anim.SetBool("Dashing", false);
+                Anim.SetBool("Kinesis", TelekinesisOn);
                 DashTime = 0f;
             }
         }
