@@ -15,7 +15,7 @@ public class FloatingMovement : MonoBehaviour
     {
         if (GetComponent<Rigidbody2D>() != null)
         {
-            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             CancelInvoke("Floating");
             InvokeRepeating("Floating", 0.01f, (0.01f / time));
         }
@@ -33,6 +33,15 @@ public class FloatingMovement : MonoBehaviour
     //상하이동 함수
     private void Floating()
     {
+        if (GetComponent<Rigidbody2D>() != null)
+        {
+            float h = Input.GetAxis("Horizontal");
+            if (h != 0)
+            {
+                GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            }
+        }
+
         //시간을 x로 위치를 y로 보고 Sin그래프를 이용
         if (curTime < 1)
         {

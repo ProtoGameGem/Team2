@@ -518,6 +518,7 @@ public class Character : MonoBehaviour, ICharacter
 
         if (tag == "Sharing")
         {
+            rigidbody2D.velocity = Vector2.zero;
             SharingOn = true;
         }
     }

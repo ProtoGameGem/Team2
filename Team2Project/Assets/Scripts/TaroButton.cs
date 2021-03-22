@@ -6,6 +6,7 @@ public class TaroButton : MonoBehaviour
 {
     [SerializeField] GameObject Taros;
     Animator anim;
+    bool ButtonPressed = false;
 
     private void Start()
     {
@@ -13,12 +14,16 @@ public class TaroButton : MonoBehaviour
         Taros.SetActive(false);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Player" || collision.tag == "PushableObject" || collision.tag == "NonePushableObject")
         {
-            anim.SetBool("Pressed", true);
-            Taros.SetActive(true);
+            if (!ButtonPressed)
+            {
+                anim.SetBool("Pressed", true);
+                Taros.SetActive(true);
+                ButtonPressed = true;
+            }
         }
     }
 
@@ -26,8 +31,12 @@ public class TaroButton : MonoBehaviour
     {
         if (collision.tag == "Player" || collision.tag == "PushableObject" || collision.tag == "NonePushableObject")
         {
-            anim.SetBool("Pressed", false);
-            Taros.SetActive(false);
+            if (ButtonPressed)
+            {
+                anim.SetBool("Pressed", false);
+                Taros.SetActive(false);
+                ButtonPressed = false;
+            }
         }
     }
 }

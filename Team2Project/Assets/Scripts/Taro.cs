@@ -13,10 +13,13 @@ public class Taro : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            Consumed = true;
-            Player.instance.CollectTaro();
-            GetComponent<BoxCollider2D>().enabled = false;
-            time = 0;
+            if (!Consumed)
+            {
+                Consumed = true;
+                Player.instance.CollectTaro();
+                GetComponent<BoxCollider2D>().enabled = false;
+                time = 0;
+            }
         }
     }
 

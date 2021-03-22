@@ -12,7 +12,11 @@ public class Player : MonoBehaviour
     private Character Character;
     private int EnabledCharacterIdx = 0;
     private int CollectedTaroNumber = 0;
-    private int GoalTaroNumber = 3;
+    [SerializeField] int GoalTaroNumber = 3;
+    [SerializeField] Text ClearTextObj;
+    [SerializeField] GameObject ClearPanelObj;
+    [SerializeField] string ClearTextString;
+    [SerializeField] string NextSceneName;
 
     public Text TaroNumText;
 
@@ -41,6 +45,7 @@ public class Player : MonoBehaviour
         // 캐릭터 캐싱
         Character = Characters[EnabledCharacterIdx];
         Character.ConvertToManualState();
+        ClearPanelObj.SetActive(false);
     }
 
     private void Update()
@@ -117,6 +122,14 @@ public class Player : MonoBehaviour
 
     public void Clear()
     {
+        ClearTextObj.text = ClearTextString;
+        ClearPanelObj.SetActive(true);
+        StartCoroutine(MoveToNextScene());
+    }
 
+    IEnumerator MoveToNextScene()
+    {
+        yield return new WaitForSeconds(4);
+        SceneManager.LoadScene(NextSceneName);
     }
 }

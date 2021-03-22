@@ -10,12 +10,15 @@ public class PlatformButton : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Player" || collision.tag == "PushableObject" || collision.tag == "NonePushableObject")
         {
-            ButtonPressed = true;
-            anim.SetBool("Pressed", ButtonPressed);
+            if (!ButtonPressed)
+            {
+                ButtonPressed = true;
+                anim.SetBool("Pressed", ButtonPressed);
+            }
         }
     }
 
@@ -23,8 +26,11 @@ public class PlatformButton : MonoBehaviour
     {
         if (collision.tag == "Player" || collision.tag == "PushableObject" || collision.tag == "NonePushableObject")
         {
-            ButtonPressed = false;
-            anim.SetBool("Pressed", ButtonPressed);
+            if (ButtonPressed)
+            {
+                ButtonPressed = false;
+                anim.SetBool("Pressed", ButtonPressed);
+            }
         }
     }
 }
