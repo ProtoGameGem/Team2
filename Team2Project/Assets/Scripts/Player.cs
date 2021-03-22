@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private Character Character;
     private int EnabledCharacterIdx = 0;
     private int CollectedTaroNumber = 0;
+    private int GoalTaroNumber = 3;
 
     public Text TaroNumText;
 
@@ -54,6 +55,11 @@ public class Player : MonoBehaviour
         if (TaroNumText != null)
         {
             TaroNumText.text = (": " + CollectedTaroNumber.ToString());
+        }
+
+        if (CollectedTaroNumber >= GoalTaroNumber)
+        {
+            Clear();
         }
     }
 
@@ -107,5 +113,10 @@ public class Player : MonoBehaviour
     {
         Scene scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.name);
+    }
+
+    public void Clear()
+    {
+
     }
 }
