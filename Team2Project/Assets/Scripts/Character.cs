@@ -73,6 +73,7 @@ public class Character : MonoBehaviour, ICharacter
 
     //공유몽
     public bool SharingOn = false;
+    public Vector2 OriginalColSize;
 
     private enum Ability {
         None, Telekinesis, Parkour
@@ -89,6 +90,7 @@ public class Character : MonoBehaviour, ICharacter
 
         OriginalAbility = HasParkourAbility ? Ability.Parkour : OriginalAbility;
         OriginalAbility = HasTelekinesisAbility ? Ability.Telekinesis : OriginalAbility;
+        OriginalColSize = GetComponent<CapsuleCollider2D>().bounds.size;
     }
 
     private void Update()
@@ -528,6 +530,32 @@ public class Character : MonoBehaviour, ICharacter
         if (tag == "Sharing")
         {
             SharingOn = false;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        string tag = collision.gameObject.tag;
+
+        if (tag == "Sharing")
+        {
+            if (rigidbody2D.velocity == Vector2.zero)
+            {
+                Anim.SetBool("Sleeping", true);
+
+                if (GetComponent<FloatingMovement>().enabled == false)
+                {
+                    GetComponent<FloatingMovement>().enabled = true;
+                }
+            }
+            else
+            {
+                Anim.SetBool("Sleeping", false);
+                if (GetComponent<FloatingMovement>().enabled == true)
+                {
+                    GetComponent<FloatingMovement>().enabled = false;
+                }
+            }
         }
     }
 

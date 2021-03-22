@@ -11,6 +11,25 @@ public class FloatingMovement : MonoBehaviour
         InvokeRepeating("Floating", 0.01f, (0.01f / time));
     }
 
+    private void OnEnable()
+    {
+        if (GetComponent<Rigidbody2D>() != null)
+        {
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
+            CancelInvoke("Floating");
+            InvokeRepeating("Floating", 0.01f, (0.01f / time));
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (GetComponent<Rigidbody2D>() != null)
+        {
+            GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            CancelInvoke("Floating");
+        }
+    }
+
     //상하이동 함수
     private void Floating()
     {
