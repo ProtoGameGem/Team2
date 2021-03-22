@@ -8,12 +8,17 @@ public class MainMenu : MonoBehaviour
     bool Pressed = false;
 
     [SerializeField] GameObject CreditPanel;
-    [SerializeField] GameObject TutorialPaenl;
+    [SerializeField] GameObject[] TutorialPaenl;
+
+    int tutorialPage = 0;
 
     private void Start()
     {
+        for (int i = 0; i < TutorialPaenl.Length; i++)
+        {
+            TutorialPaenl[i].SetActive(false);
+        }
         CreditPanel.SetActive(false);
-        TutorialPaenl.SetActive(false);
     }
 
     public void GameStart()
@@ -29,7 +34,7 @@ public class MainMenu : MonoBehaviour
 
     public void OpenTutorialMenu()
     {
-        TutorialPaenl.SetActive(true);
+        TutorialPaenl[tutorialPage].SetActive(true);
         IsTutorialPanelOn = true;
     }
 
@@ -64,8 +69,20 @@ public class MainMenu : MonoBehaviour
             }
             else if (IsTutorialPanelOn)
             {
-                IsTutorialPanelOn = false;
-                TutorialPaenl.SetActive(false);
+                if (Input.GetMouseButtonUp(0))
+                {
+                    TutorialPaenl[tutorialPage++].SetActive(false);
+                    if (tutorialPage < TutorialPaenl.Length)
+                    {
+                        TutorialPaenl[tutorialPage].SetActive(true);
+                        Pressed = false;
+                    }
+                    else
+                    {
+                        tutorialPage = 0;
+                        IsTutorialPanelOn = false;
+                    }
+                }
             }
         }
     }

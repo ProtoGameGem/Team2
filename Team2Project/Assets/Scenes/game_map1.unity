@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32da6b765ac77145a23a633a72c5827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intensity: 0.003
-  time: 1
+  intensity: 0.007
+  time: 2
 --- !u!114 &671192396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   intensity: 0.005
-  time: 1
+  time: 2
 --- !u!114 &715095657
 MonoBehaviour:
   m_ObjectHideFlags: 0
