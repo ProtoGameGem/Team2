@@ -100,18 +100,33 @@ public class Player : MonoBehaviour
 
     public void SharingAbilityHandler()
     {
-        Character CurCharacter = Characters[EnabledCharacterIdx];
-        Character NextCharacter = Characters[((EnabledCharacterIdx + 1) % Characters.Count)];
-        if (CurCharacter.SharingOn)
+        for (int i = 0; i < Characters.Count; i++)
         {
-            NextCharacter.ToogleSharedAbility(true);
-            NextCharacter.Icon.SetActive(true);
-        }
-        else
-        {
-            NextCharacter.ToogleSharedAbility(false);
-            NextCharacter.Icon.SetActive(false);
-        }
+            Character CurCharacter = Characters[i];
+            Character NextCharacter = Characters[((i + 1) % Characters.Count)];
+            if (CurCharacter.SharingOn)
+            {
+                if (NextCharacter.InteractDreamRoll != null)
+                {
+                    DreamRoll dreamRoll = NextCharacter.InteractDreamRoll.GetComponent<DreamRoll>();
+                    if (dreamRoll != null)
+                    {
+                        if (dreamRoll.Pushed)
+                        {
+                            dreamRoll.DisablePushMode();
+                            NextCharacter.GetComponent<Animator>().SetBool("Pushing", false);
+                        }
+                    }
+                }
+                NextCharacter.ToogleSharedAbility(true);
+                NextCharacter.Icon.SetActive(true);
+            }
+            else
+            {
+                NextCharacter.ToogleSharedAbility(false);
+                NextCharacter.Icon.SetActive(false);
+            }
+        }   
     }
 
     public void RestartGame()

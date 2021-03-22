@@ -16,7 +16,6 @@ public class SideColiider : MonoBehaviour
         string tag = collision.gameObject.tag;
         Character character = parent.GetComponent<Character>();
 
-
         if (tag == "Wall" || tag == "Floor")
         {
             if (character.Dir > 0)
@@ -31,13 +30,22 @@ public class SideColiider : MonoBehaviour
             }
 
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        string tag = collision.gameObject.tag;
+        Character character = parent.GetComponent<Character>();
 
         if (!character.Flying)
         {
-
             if (tag == "PushableObject")
             {
                 character.InteractDreamRoll = collision.gameObject;
+            }
+            else
+            {
+                character.InteractDreamRoll = null;
             }
         }
     }

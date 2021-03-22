@@ -519,7 +519,6 @@ public class Character : MonoBehaviour, ICharacter
         if (tag == "Sharing")
         {
             rigidbody2D.velocity = Vector2.zero;
-            SharingOn = true;
         }
     }
 
@@ -543,6 +542,7 @@ public class Character : MonoBehaviour, ICharacter
             if (rigidbody2D.velocity == Vector2.zero)
             {
                 Anim.SetBool("Sleeping", true);
+                SharingOn = true;
 
                 if (GetComponent<FloatingMovement>().enabled == false)
                 {
