@@ -275,12 +275,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 593568397}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_Father: {fileID: 6329756642073917582}
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1173726963 stripped
 Transform:
@@ -885,6 +885,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4975219146360886186, guid: 88d203051931d954c91196ef5463f229, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d84787d7de8c437439e476069d5cf28c, type: 2}
     - target: {fileID: 6908474599987306595, guid: 88d203051931d954c91196ef5463f229, type: 3}
       propertyPath: m_Name
       value: TaroButton
@@ -1060,10 +1064,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8157588368242909808, guid: 86bd827eac4dbd04b96eb967a8d01960, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 5391878592210478063, guid: 6664332c7d16e334bb2eb8c370371bcc, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86bd827eac4dbd04b96eb967a8d01960, type: 3}
 --- !u!4 &6329756642073917582
@@ -1090,6 +1090,7 @@ Transform:
   - {fileID: 591880418}
   - {fileID: 1330523768}
   - {fileID: 1487030926}
+  - {fileID: 593568400}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
