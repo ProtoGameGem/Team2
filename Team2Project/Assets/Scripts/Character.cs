@@ -120,8 +120,21 @@ public class Character : MonoBehaviour, ICharacter
                 Telekinesis.SetActive(TelekinesisOn);
                 Anim.SetBool("Walking", false);
                 Anim.SetBool("Dashing", false);
+                if (InteractDreamRoll != null && TelekinesisOn)
+                {
+                    DreamRoll dreamRoll = InteractDreamRoll.GetComponent<DreamRoll>();
+                    if (dreamRoll != null)
+                    {
+                        if (dreamRoll.Pushed)
+                        {
+                            dreamRoll.DisablePushMode();
+                            Anim.SetBool("Pushing", false);
+                        }
+                    }
+                }
                 Anim.SetBool("Kinesis", TelekinesisOn);
                 DashTime = 0f;
+
             }
         }
         if (HasParkourAbility && EnoughFlyToParkour)
@@ -133,6 +146,14 @@ public class Character : MonoBehaviour, ICharacter
                     if (!ParkourOn)
                     {
                         StopDash();
+                        if (HitLeftWall)
+                        {
+                            Anim.SetBool("PakourStandingLeft", true);
+                        }
+                        else if (HitRightWall)
+                        {
+                            Anim.SetBool("PakourStandingRight", true);
+                        }
                         ParkourTime = 1f;
                         rigidbody2D.gravityScale = 0f;
                         h = v = 0;
@@ -156,6 +177,8 @@ public class Character : MonoBehaviour, ICharacter
                 ParkourOn = false;
                 rigidbody2D.gravityScale = 1f;
                 ParkourJumpingTime = 2f;
+                Anim.SetBool("PakourStandingRight", false);
+                Anim.SetBool("PakourStandingLeft", false);
             }
             else if (ParkourTime <= 0f)
             {
@@ -164,6 +187,8 @@ public class Character : MonoBehaviour, ICharacter
                 rigidbody2D.gravityScale = 1f;
                 ShouldFallPakour = true;
                 StopPakourJump();
+                Anim.SetBool("PakourStandingRight", false);
+                Anim.SetBool("PakourStandingLeft", false);
             }
         }
     }
@@ -173,6 +198,9 @@ public class Character : MonoBehaviour, ICharacter
         Anim.SetBool("Walking", false);
         Anim.SetBool("Dashing", false);
         Anim.SetBool("Kinesis", false);
+        Anim.SetBool("Pushing", false);
+        Anim.SetBool("PakourStandingRight", false);
+        Anim.SetBool("PakourStandingLeft", false);
     }
 
     public void AbilityOff(bool toogle)
@@ -182,9 +210,7 @@ public class Character : MonoBehaviour, ICharacter
             TelekinesisOn = toogle;
             Telekinesis.SetActive(TelekinesisOn);
         }
-        Anim.SetBool("Walking", false);
-        Anim.SetBool("Dashing", false);
-        Anim.SetBool("Kinesis", false);
+        SetOffAnim();
     }
 
     private void MoveInputHandler()
@@ -220,10 +246,12 @@ public class Character : MonoBehaviour, ICharacter
                 if (dreamRoll.Pushed)
                 {
                     dreamRoll.DisablePushMode();
+                    Anim.SetBool("Pushing", false);
                 }
                 else
                 {
                     dreamRoll.EnablePushMode(gameObject);
+                    Anim.SetBool("Pushing", true);
                 }
             }
         }
@@ -278,6 +306,7 @@ public class Character : MonoBehaviour, ICharacter
         {
             FlyingBounce = false;
             Flying = false;
+            Anim.SetBool("Jumping", false);
             rigidbody2D.velocity = new Vector2(rigidbody2D.velocity.x, 0);
             ShouldFallPakour = false;
 
@@ -311,6 +340,7 @@ public class Character : MonoBehaviour, ICharacter
             if (InteractDreamRoll != null)
             {
                 InteractDreamRoll.GetComponent<DreamRoll>().DisablePushMode();
+                Anim.SetBool("Pushing", false);
             }
         }
 
@@ -435,6 +465,7 @@ public class Character : MonoBehaviour, ICharacter
             HorizontalFlyingSpeed = rigidbody2D.velocity.x;
             OriginalHorizontalFlyingSpeed = HorizontalFlyingSpeed;
             rigidbody2D.velocity = new Vector2(HorizontalFlyingSpeed, jumpForce);
+            Anim.SetBool("Jumping", true);
             Flying = true;
         }
     }
