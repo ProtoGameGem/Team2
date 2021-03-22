@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
         {
             Character CurCharacter = Characters[i];
             Character NextCharacter = Characters[((i + 1) % Characters.Count)];
-            if (CurCharacter.SharingOn)
+            if (CurCharacter.SharingOn && !NextCharacter.Icon.activeSelf)
             {
                 if (NextCharacter.InteractDreamRoll != null)
                 {
@@ -121,7 +121,7 @@ public class Player : MonoBehaviour
                 NextCharacter.ToogleSharedAbility(true);
                 NextCharacter.Icon.SetActive(true);
             }
-            else
+            else if (!CurCharacter.SharingOn)
             {
                 NextCharacter.ToogleSharedAbility(false);
                 NextCharacter.Icon.SetActive(false);
