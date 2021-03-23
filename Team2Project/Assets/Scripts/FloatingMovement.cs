@@ -15,6 +15,7 @@ public class FloatingMovement : MonoBehaviour
     {
         if (GetComponent<Rigidbody2D>() != null)
         {
+            transform.position = transform.position + new Vector3(0, 0.2f, 0);
             GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
             CancelInvoke("Floating");
             InvokeRepeating("Floating", 0.01f, (0.01f / time));

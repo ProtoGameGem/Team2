@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private List<Character> Characters = new List<Character>();
     [SerializeField] private List<GameObject> VirtualCam = new List<GameObject>();
     private bool AimFirstPlayer = true;
-    private Character Character;
+    public Character Character;
     private int EnabledCharacterIdx = 0;
     private int CollectedTaroNumber = 0;
     [SerializeField] int GoalTaroNumber = 3;
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
             OldCharacter.ConvertToDisableState();
             if (!OldCharacter.Flying)
             {
-                OldCharacter.GetComponent<Rigidbody2D>().velocity = new Vector2(0, OldCharacter.GetComponent<Rigidbody2D>().velocity.y);
+                OldCharacter.GetComponent<Rigidbody2D>().velocity = new Vector2(0, OldCharacter.GetComponent<Rigidbody2D>().velocity.y);            
                 OldCharacter.AbilityOff(false);
             }
             EnabledCharacterIdx = (EnabledCharacterIdx + 1) % Characters.Count;
