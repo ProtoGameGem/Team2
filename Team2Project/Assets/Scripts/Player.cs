@@ -46,10 +46,17 @@ public class Player : MonoBehaviour
         Character = Characters[EnabledCharacterIdx];
         Character.ConvertToManualState();
         ClearPanelObj.SetActive(false);
+
+        UnityEngine.Cursor.visible = true;
     }
 
     private void Update()
     {
+        if (Input.GetKey("escape"))
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+
         SwitchCharacter();
         SharingAbilityHandler();
     }

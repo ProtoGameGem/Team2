@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
             TutorialPaenl[i].SetActive(false);
         }
         CreditPanel.SetActive(false);
+        UnityEngine.Cursor.visible = true;
     }
 
     public void GameStart()
@@ -41,6 +42,11 @@ public class MainMenu : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKey("escape"))
+        {
+            Application.Quit();
+        }
+
         if (Pressed)
         {
             if (Input.GetMouseButton(0))
