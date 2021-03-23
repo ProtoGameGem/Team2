@@ -599,6 +599,22 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -6.38
       objectReference: {fileID: 0}
+    - target: {fileID: 2525349739775545680, guid: 37183da7f1f34af43af728dcda7cd56a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 15.795106
+      objectReference: {fileID: 0}
+    - target: {fileID: 2525349739775545680, guid: 37183da7f1f34af43af728dcda7cd56a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.014801
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038905400856254008, guid: 37183da7f1f34af43af728dcda7cd56a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 3038905400856254008, guid: 37183da7f1f34af43af728dcda7cd56a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -18.87
+      objectReference: {fileID: 0}
     - target: {fileID: 4302477691887167619, guid: 37183da7f1f34af43af728dcda7cd56a, type: 3}
       propertyPath: m_Name
       value: Stage_1
