@@ -19,6 +19,7 @@ public class Taro : MonoBehaviour
                 Player.instance.CollectTaro();
                 GetComponent<BoxCollider2D>().enabled = false;
                 time = 0;
+                Debug.Log("TaroCollected");
             }
         }
     }

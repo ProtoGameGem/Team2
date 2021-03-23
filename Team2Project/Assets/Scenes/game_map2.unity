@@ -210,6 +210,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   intensity: 0.002
   time: 2
+--- !u!114 &625051745 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2491784429170634750, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+  m_PrefabInstance: {fileID: 4848017201787228682}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1643778152
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,6 +579,14 @@ PrefabInstance:
     - target: {fileID: 651801355630323912, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
       propertyPath: m_Name
       value: Stage_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1275936507147768090, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: TaroNumText
+      value: 
+      objectReference: {fileID: 625051745}
+    - target: {fileID: 1418216148421675525, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_TagString
+      value: Wall
       objectReference: {fileID: 0}
     - target: {fileID: 4934067447363975511, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
       propertyPath: m_RootOrder
