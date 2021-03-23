@@ -37,7 +37,7 @@ public class FloatingMovement : MonoBehaviour
         if (GetComponent<Rigidbody2D>() != null)
         {
             float h = Input.GetAxis("Horizontal");
-            if (h != 0)
+            if (h != 0 && Player.instance.Character.gameObject == gameObject)
             {
                 GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
             }
