@@ -584,9 +584,113 @@ PrefabInstance:
       propertyPath: TaroNumText
       value: 
       objectReference: {fileID: 625051745}
+    - target: {fileID: 1418216148294946643, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148294946643, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148383560991, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148383560991, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.89
+      objectReference: {fileID: 0}
     - target: {fileID: 1418216148421675525, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
       propertyPath: m_TagString
       value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148421675527, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4.729
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148421675527, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.398
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148421675527, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.356
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148421675527, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -18.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148630953318, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.356
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148630953318, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -18.53
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148714830637, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_Size.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148714830637, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148714830639, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4.711
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148714830639, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.289
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148714830639, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216148714830639, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.89
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216149071480276, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -2.356
+      objectReference: {fileID: 0}
+    - target: {fileID: 1418216149071480276, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -13.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569414227655822302, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.542
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569414227655822302, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -13.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569414227777799181, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569414227777799181, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.556
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569414227777799181, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.542
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569414227777799181, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -13.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569414227989926764, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -13.542
+      objectReference: {fileID: 0}
+    - target: {fileID: 4569414227989926764, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.59
       objectReference: {fileID: 0}
     - target: {fileID: 4934067447363975511, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
       propertyPath: m_RootOrder
@@ -634,3 +738,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+--- !u!1 &4848017201787228683 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1418216148714830632, guid: fe0c1b2285d961b4c911d0686f716521, type: 3}
+  m_PrefabInstance: {fileID: 4848017201787228682}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &4848017201787228684
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4848017201787228683}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.29, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.09
